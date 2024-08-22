@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Carga Compra</title>
+</head>
+<body>
+    <section class="form-register">
+        <fieldset>
+            <legend>Registrar Proveedor</legend>
+            <form>
+                <input class="Controls" type="text" placeholder="Nombre de Proveedor" aria-label="Nombre de Proveedor">
+                <br>
+                <br>
+                <input class="Controls" type="text" placeholder="Tipo de Proveedor" aria-label="Tipo de Proveedor">
+                <br>
+                <br>
+                <input class="Controls" type="tel" placeholder="Telefono" aria-label="Telefono">
+                <br>
+                <br>
+                <input class="Controls" type="text" placeholder="Direccion" aria-label="Direccion">
+                <br>
+                <br>
+                <input class="Controls" type="email" placeholder="Direccion email" aria-label="Direccion email">
+                <br>
+                <br>
+                <input type="image" src="{% static 'images/submit.png' %}" alt="Submit">
+                <br>
+                <br>
+                <button type="submit">Registrar</button>
+            </form>
+        </fieldset>
+    </section>
+</body>
+</html>
