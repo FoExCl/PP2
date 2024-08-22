@@ -189,13 +189,14 @@ class DjangoSession(models.Model):
 
 
 class Empleados(models.Model):
-    dni = models.AutoField(db_column='DNI', primary_key=True)  # Field name made lowercase.
+    dni = models.IntegerField(db_column='DNI', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=50)  # Field name made lowercase.
     apellido = models.CharField(db_column='Apellido', max_length=50)  # Field name made lowercase.
     edad = models.IntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
     correo = models.CharField(max_length=50)
     direccion = models.CharField(max_length=60, blank=True, null=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
 
     class Meta:
         managed = False
