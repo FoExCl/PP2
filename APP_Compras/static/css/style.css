@@ -1,10 +1,43 @@
 *{
+    text-align: center;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-*{
-    width: 400px;
-    background: #367bbb;
+input{
+    width:80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    text-align: center;
+    border-bottom: 0;
+    border-color: blue;
+    border-radius: 50px;
+    background: #0c3d6c89;
+    color: rgb(210, 29, 29);
+    text-transform: lowercase;
+    font-family:monospace;
+    font-style: oblique;
+
+
+}
+
+
+fieldset{
+    text-align: center;
+    border-style:solid;
+    border-radius:10px;
+    background-color: rgba(42, 112, 182, 0.608);
+}
+
+legend{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-style:solid;
+
+}
+
+section{
+    text-align: center;
+    width: 300px;
 }
