@@ -83,9 +83,8 @@ class Cajas(models.Model):
     estado_caja = models.CharField(max_length=15)
     fechaaperturacaja = models.DateTimeField(db_column='FechaAperturaCaja')  # Field name made lowercase.
     fechacierrecaja = models.DateTimeField(db_column='FechaCierreCaja')  # Field name made lowercase.
-    monto_inicial = models.DecimalField(max_digits=6, decimal_places=2)
-    total_ingresos = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    total_egresos = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    total_ingresos_caja = models.DecimalField(db_column='Total_ingresos_Caja', max_digits=10, decimal_places=2)  # Field name made lowercase.
+    total_egresos_caja = models.DecimalField(db_column='Total_Egresos_Caja', max_digits=10, decimal_places=2)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -106,8 +105,7 @@ class Clientes(models.Model):
 
 class Compras(models.Model):
     id_compra = models.AutoField(primary_key=True)
-    id_proveedor = models.ForeignKey('Provxprod', models.DO_NOTHING, db_column='id_proveedor')
-    id_producto = models.ForeignKey('Provxprod', models.DO_NOTHING, db_column='id_producto', to_field='ID_Productos', related_name='compras_id_producto_set')
+    id_provxprod = models.ForeignKey('Provxprod', models.DO_NOTHING, db_column='id_provxprod')
     id_caja = models.ForeignKey(Cajas, models.DO_NOTHING, db_column='id_caja')
     cantidad = models.IntegerField()
     precio_total = models.DecimalField(max_digits=10, decimal_places=2)
@@ -134,7 +132,7 @@ class DetalleVentas(models.Model):
     id_det_venta = models.AutoField(primary_key=True)
     id_venta = models.ForeignKey('Ventas', models.DO_NOTHING, db_column='id_venta')
     id_factura = models.ForeignKey('Facturas', models.DO_NOTHING, db_column='id_Factura')  # Field name made lowercase.
-    id_productos = models.ForeignKey('Productos', models.DO_NOTHING, db_column='ID_Productos')  # Field name made lowercase.
+    id_prod = models.ForeignKey('Productos', models.DO_NOTHING, db_column='ID_Prod')  # Field name made lowercase.
     cant_prod_vendido = models.IntegerField()
     subtotal = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
 
@@ -189,13 +187,13 @@ class DjangoSession(models.Model):
 
 
 class Empleados(models.Model):
-    dni = models.IntegerField(db_column='DNI', primary_key=True)  # Field name made lowercase.
+    dni = models.AutoField(db_column='DNI', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=50)  # Field name made lowercase.
     apellido = models.CharField(db_column='Apellido', max_length=50)  # Field name made lowercase.
     edad = models.IntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
+    telefono = models.CharField(max_length=20, blank=True, null=True)
     correo = models.CharField(max_length=50)
     direccion = models.CharField(max_length=60, blank=True, null=True)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
     id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
 
     class Meta:
@@ -243,21 +241,21 @@ class Proveedores(models.Model):
 
 
 class Provxprod(models.Model):
-    id_proveedores = models.OneToOneField(Proveedores, models.DO_NOTHING, db_column='ID_Proveedores', primary_key=True)  # Field name made lowercase. The composite primary key (ID_Proveedores, ID_Productos) found, that is not supported. The first column is selected.
-    id_productos = models.ForeignKey(Productos, models.DO_NOTHING, db_column='ID_Productos')  # Field name made lowercase.
+    id_provxprod = models.AutoField(db_column='Id_ProvXProd', primary_key=True)  # Field name made lowercase.
+    id_prov_pxp = models.ForeignKey(Proveedores, models.DO_NOTHING, db_column='ID_Prov_pxp')  # Field name made lowercase.
+    id_prod_pxp = models.ForeignKey(Productos, models.DO_NOTHING, db_column='ID_Prod_pxp')  # Field name made lowercase.
     descripcion = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'provxprod'
-        unique_together = (('id_proveedores', 'id_productos'),)
 
 
 class Stock(models.Model):
     id_stock = models.AutoField(primary_key=True)
     id_prod = models.ForeignKey(Productos, models.DO_NOTHING, db_column='ID_Prod')  # Field name made lowercase.
-    stock_min = models.IntegerField()
-    stock_actual = models.IntegerField()
+    stock_min = models.IntegerField(blank=True, null=True)
+    stock_actual = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
