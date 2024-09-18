@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container">
+        <section class="vh-100 d-flex justify-content-center align-items-center">
+            
+                <form action=""  method="POST" class="card card-body mx-auto" style="max-width: 300px;">
+                    <h2 class="text-center">Sign in</h2>
+                    <img src="https://github.com/JuncoAriel/img/blob/main/2.png?raw=true" alt="Login logo" height="200" width="200" class="mx-auto d-block">
+                    {{ error }}
+                    {% csrf_token %}
+                    
+                        {{ error }}
+                        {% csrf_token %}   
+                                
+                        <div class="mb-3">
+                              <label for="username">Usuario:</label>
+                              <input type="text" name="username" id="username" class="form-control" placeholder="Ingrese usuario">
+                        </div>
+                
+                        <div class="mb-3">
+                              <label for="password">Contraseña:</label>
+                              <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese contraseña">
+                         </div>
+                 
+                    <button class="btn btn-primary">
+                        Iniciar Sesión
+                    </button>
+                
+                
+                </form>
+            
+        </section>
+</main>
+{%endblock content%}
+

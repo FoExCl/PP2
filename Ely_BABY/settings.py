@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # aplicaciones instaladas/hechas
-    'bootstrap5',
+    'django_bootstrap5',
     'loginApp',
     "crispy_forms",
     "crispy_bootstrap5",
@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'p1_ely_baby',
+        'NAME': 'elybaby',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '12345678',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
