@@ -1,0 +1,48 @@
+{% extends "./base.html" %}
+{% block title %} Compras - Proveedores{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class=" col-sm-12 col-md-4 col-lg-2 col-xl-2">
+
+    </div>
+    <div class=" col-sm-12 col-md-8 col-lg-10 col-xl-10">
+        <h1>Compras</h1>
+        <table class="table table-hover table-hover mt-3 text-center table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre Proveedor</th>
+                    <th>Tipo de Proveedor</th>
+                    <th>Telefono</th>
+                    <th>E-mail</th>
+                    <th>Fecha</th>
+                    <th>Factura</th>
+                    <th>acciones</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                <td>1</td>
+                <td>Nom_</td>
+                <td>Remeras</td>
+                <td>3875346797</td>
+                <td>remes@gmail.com</td>
+                <td>DD/MM/AAAA</td>
+                <td>imagen</td>
+                <td>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+                        <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
+                        <button type="submit" class="btn btn-success">Actualizar<i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-danger">Eliminar<i class="bi bi-trash"></i></i></button>
+                    </div>
+                </td>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-dark">Registrar Nueva Compra</button>
+    </div>
+    
+</div>
+
+{% endblock %}
