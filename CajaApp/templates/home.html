@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apertura de Caja</title>
+   {% load static %}
+  <link rel="stylesheet" href="{% static 'Css/style.css' %}">
+</head>
+<body>
+  <form>
+    <h1>Apertura de Caja</h1>
+    <hr>
+    <br>
+    <br>
+    <label for="fecha">Fecha de caja:</label>
+    <input type="text" id="fecha" name="fecha" placeholder="DD/MM/AAAA">
+    
+    <label for="movimiento">Tipo de movimiento:</label>
+    <input type="text" id="movimiento" name="movimiento" value="Apertura" readonly>
+    
+    <label for="monto">Monto inicial:</label>
+    <input type="text" id="monto" name="monto">
+    
+    <input type="submit" value="Abrir caja">
+  </form>
+</body>
+</html>
