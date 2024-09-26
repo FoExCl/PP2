@@ -1,8 +1,8 @@
 """
-URL configuration for Ely_BABY project.
+URL configuration for elybaby project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from loginApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Compras/', include("APP_Compras.urls"))
+    path('Compras/', include("APP_Compras.urls")),
+    path('', views.home, name='home'),
+    path('signin/', views.signin, name='signin'),
+    path('signup/', views.signup, name='signup'),
+    path('users/', views.user_list, name='userlist'),
+    path('logout/', views.exit, name='exit'),
 ]
