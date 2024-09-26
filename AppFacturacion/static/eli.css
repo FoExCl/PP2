@@ -1,0 +1,209 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #A0B0AF
+    ;
+}
+
+h1 {
+    text-align: left;
+    color: #333;
+    margin: 20px 0;
+}
+
+
+.factura-datos {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.factura-datos label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.factura-datos input[type="text"],
+.factura-datos input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.factura-datos input[readonly] {
+    background-color: #e9e9e9;
+}
+
+
+#pantalla-dividida {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.izquierda,
+.derecha {
+    width: 48%;
+}
+
+.izquierda {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.derecha {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-bordered {
+    border: 5px solid #ddd;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 3px solid #ddd;
+}
+
+.table th {
+    background-color: #f4f4f4;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table td[colspan="2"] {
+    text-align: right;
+}
+
+.table td button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.table td button:hover {
+    background-color: #c0392b;
+}
+
+
+.agregar-producto {
+    margin-top: 20px;
+}
+
+.agregar-producto label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.agregar-producto input[type="text"],
+.agregar-producto input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.agregar-producto button {
+    background-color: #060606;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.agregar-producto button:hover {
+    background-color: #000000;
+}
+
+
+.total {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.total span {
+    font-weight: bold;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button.btn-1 {
+    
+    background-color: #509DF9;
+}
+
+button.btn-1:hover {
+    background-color: #032b59;
+}
+
+button.btn-2 {
+    background-color: #B02929;
+}
+
+button.btn-2:hover {
+    background-color: #79251c;
+}
+
+button.btn-3 {
+    background-color: #3DB62A;
+}
+
+button.btn-3:hover {
+    background-color: #2d8a1f;
+}
+
+button.btn-4 {
+    background-color: #B02929;
+}
+
+button.btn-4:hover {
+    background-color: #711a1a;
+}

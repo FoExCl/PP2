@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FacturaciónEliBaby</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static eli.css%}">
+</head>
+<body>
+    <h1>CAJA > VENTAS > NUEVA FACTURA</h1>
+
+    <div class="factura-datos">
+        <label for="numero-factura"><b>Nº factura:</b></label>
+        <input type="text" id="numero-factura" value="" readonly>
+        <label for="cliente"><b>Cliente:</b></label>
+        <input type="text" id="cliente" value="">
+    </div>
+
+    <section id="pantalla-dividida">
+
+    <div class="izquierda">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                  
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio-Venta</th>
+                  
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"></th>
+                  
+                  
+                </tr>
+                <tr>
+                  <th scope="row"></th>
+                  
+                 
+                  
+                  
+                  
+                
+                </tr>
+                <tr>
+                  <th scope="row"></th>
+                  <td colspan="2"></td>
+                  
+                  
+                  
+                </tr>
+              </tbody>
+            </table>
+    </div>
+    
+
+    <div class="derecha">
+        <h1>Agregar Articulo</h1>
+    
+        <div class="agregar-producto">
+            <label for="codigo">Código:</label>
+            <input type="text" id="codigo">
+            <button class="btn-6">Buscar</button><br><br>
+            <label for="articulo">Artículo:</label>
+            <input type="text" id="articulo"><br><br>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio">
+            <button class="btn-5">Agregar</button> 
+            
+    </div>   
+
+    </section>
+
+
+    <div class="total">
+        <span>Total:</span>
+        <span id="total">0</span>
+    </div><br>
+
+   <button class="btn-1">Actualizar precios</button>
+   <button class="btn-2">Eliminar Producto</button>
+   <button class="btn-3">Generar Venta</button>
+   <button class="btn-4">Salir</button>
+
+   
+   <script src="javascript.js"></script>
+</body>
+</html>
