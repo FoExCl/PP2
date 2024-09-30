@@ -108,6 +108,29 @@ h1 {
     background-color: #c0392b;
 }
 
+#articulo{
+    width: 200px; /* Ajusta el ancho según tus necesidades */
+    padding: 10px;
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px; /* Esquinas ligeramente redondeadas */
+    font-size: 16px;
+    appearance: none; /* Elimina estilos predeterminados en algunos navegadores */
+    -webkit-appearance: none; /* Elimina estilos predeterminados en Chrome/Safari */
+  }
+  
+  /* Estilo para la flecha desplegable (puede variar según el navegador) */
+  #Prendas::-ms-expand {
+    display: none; 
+  }
+  
+  #Prendas::after {
+    content: '▼'; /* Agrega una flecha hacia abajo */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Evita que la flecha sea clickeable */
+  }
 
 .agregar-producto {
     margin-top: 20px;

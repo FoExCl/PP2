@@ -46,6 +46,9 @@ INSTALLED_APPS = [
 
     
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS= "boostrap5"
+
+CRISPY_TEMPLATE_PACKS = "boostrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'elybaby',
         'USER': 'root',
-        'PASSWORD': '12345678',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }

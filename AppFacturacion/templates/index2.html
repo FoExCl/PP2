@@ -2,8 +2,7 @@
 <html>
 <head>
     <title>FacturaciónEliBaby</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static eli.css%}">
+    <link rel="stylesheet" href="eli.css">
 </head>
 <body>
     <h1>CAJA > VENTAS > NUEVA FACTURA</h1>
@@ -19,43 +18,21 @@
 
     <div class="izquierda">
 
-        <table class="table table-bordered">
+        <table class=" table">
             <thead>
                 <tr>
                   
                   <th scope="col">Cantidad</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Precio-Venta</th>
-                  
-                  
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row"></th>
-                  
-                  
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  
-                 
-                  
-                  
-                  
                 
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="2"></td>
-                  
-                  
-                  
-                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                
               </tbody>
             </table>
     </div>
-    
 
     <div class="derecha">
         <h1>Agregar Articulo</h1>
@@ -64,8 +41,17 @@
             <label for="codigo">Código:</label>
             <input type="text" id="codigo">
             <button class="btn-6">Buscar</button><br><br>
-            <label for="articulo">Artículo:</label>
-            <input type="text" id="articulo"><br><br>
+            <label for="Prendas">Prendas:</label>
+            <select id="articulo">
+              <option value="">Seleccionar Prendas</option>
+              <option value="Remeras">Remeras</option>
+              <option value="Pantalon">Pantalon</option>
+              <option value="Medias">Medias</option>
+              <option value="Zapatos">Zapatos</option>
+              <option value="Chupete">Chupete</option>
+              <option value="Vestido">Vestido</option>
+            </select><br><br>
+            
             <label for="cantidad">Cantidad:</label>
             <input type="number" id="cantidad">
             <label for="precio">Precio:</label>
@@ -79,7 +65,7 @@
 
     <div class="total">
         <span>Total:</span>
-        <span id="total">0</span>
+        <span id="total">0.00</span>
     </div><br>
 
    <button class="btn-1">Actualizar precios</button>
