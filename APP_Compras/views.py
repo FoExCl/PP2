@@ -2,11 +2,6 @@ from django.shortcuts import render,redirect
 from loginApp.models import Compras, Provxprod,Cajas
 
 # Create your views here.
-def registro_Prov(request):
-    # Prov= Proveedores
-
-    return render(request, "carga_Compra.html", {"Prov=Prov"})
-
 def home(request):
     return render(request, "index.html")
 
@@ -27,5 +22,5 @@ def registro_Compra(request):
 def registro_Prov(request):
     # Prov= Proveedores
     Prov=Provxprod.objects.all()
-    return render(request, "carga_Compra.html", {"Prov=prod"})
+    return render(request, "carga_Compra.html" , {"Prov":Prov})
 
