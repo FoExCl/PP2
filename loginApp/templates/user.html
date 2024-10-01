@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}  <!-- Incluimos la barra de navegación -->
+
+<div class="content" style="margin-left: 206px; margin-top: 1rem;">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    <h3 class="text-center"><i class="fas fa-user me-2"></i>Perfil del Usuario</h3> <!-- Título del perfil -->
+                    <br>
+                    <div class="card card-body">
+                        <h4 class="text-center">Detalles de Usuario</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>Nombre:</strong>
+                                <p>{{ user.first_name }}</p> <!-- Nombre del usuario -->
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Apellido:</strong>
+                                <p>{{ user.last_name }}</p> 
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Email:</strong>
+                                <p>{{ user.email }}</p> 
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Nombre de Usuario:</strong>
+                                <p>{{ user.username }}</p> 
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <a href="" class="btn btn-secondary">Editar perfil</a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}
