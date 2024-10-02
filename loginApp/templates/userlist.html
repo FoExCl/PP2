@@ -12,8 +12,8 @@
                     <br>
                     <div class="card card-body" style="overflow:visible">
                         <br>
-                        <table class="table table-hover " id="userTable">
-                            <thead>
+                        <table class="table table-striped table-bordered" id="userTable">
+                            <thead class="table-dark">
                                 <tr>
                                     <th># ID</th>
                                     <th>Nombre de Usuario</th>
@@ -30,14 +30,13 @@
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.role }}</td>
                                     <td>
-                                        <button onclick="" class="btn btn-dark-outline btn-sm" data-toggle="modal"
-                                            href="">
-                                            <img src="" alt="Editar" width="30">
+                                        <button onclick="" class="btn btn-dark-outline btn-sm" data-toggle="modal" href="">
+                                            <i class="fa-solid fa-pen-to-square" style="color: #000000;"></i>
+
                                         </button>
-                                        <button onclick="" class="btn btn-dark-outline btn-sm" data-toggle="modal"
-                                            href="">
-                                            <img src="" alt="Eliminar" width="30">
-                                        </button>
+                                        <a href="" class="btn btn-dark-outline btn-sm">
+                                            <i class="fa-solid fa-trash" style="color: #000000;"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -47,10 +46,11 @@
                     <br>
                     <div class="col-md-3 pb-2">
                         
-                        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <a href="{% url 'signup' %}" class="btn btn-secondary mb-3">
                             Agregar Usuario
                             <i class="fas fa-plus-circle"></i>
-                        </button>
+                        </a>
+                        
                         
                     </div>
                 </div>
@@ -59,89 +59,6 @@
          
     </section>
 </div>
-
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Agregar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row justify-content-center">
-                    <section class="col-md-8 mt-5">
-                        <form method="POST" class="card card-body">
-                            <h1 class="text-center">Signup</h1>
-                            {{ error }}
-                            {% csrf_token %}
-                            <hr>
-            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="nombre">Nombre:</label>
-                                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese nombre">
-                                </div>
-                
-                                <div class="col-md-6 mb-3">
-                                    <label for="apellido">Apellido:</label>
-                                    <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Ingrese apellido">
-                                </div>
-                
-                                <div class="col-md-6 mb-3">
-                                    <label for="correo">Email:</label>
-                                    <input type="email" name="correo" id="correo" class="form-control" placeholder="Ingrese correo electronico">
-                                </div>
-                
-                                <div class="col-md-6 mb-3">
-                                    <label for="usuario">Usuario:</label>
-                                    <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Ingrese nombre de usuario">
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="password1">Contraseña:</label>
-                                    <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingrese contraseña">
-                                </div>
-                
-                                <div class="col-md-6 mb-3">
-                                    <label for="password2">Confirme contraseña:</label>
-                                    <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirme contraseña">
-                                </div>
-                
-                                <div class="col-md-6 mb-3">
-                                    <label for="telefono">Telefono:</label>
-                                    <input type="tel" name="telefono" id="telefono" class="form-control" placeholder="Ingrese numero de telefono">
-                                </div>
-            
-                                <div class="col-md-6 mb-3">
-                                    <label for="user_type">Tipo de Usuario:</label>
-                                    <select name="user_type" id="user_type" class="form-control">
-                                        <option value="basic">Vendedor</option> 
-                                        <option value="admin">Administrador</option> 
-                                    </select>
-                                </div>
-            
-                            </div>
-                            
-                            <button class="btn btn-primary style="width: 100px;  height: 50px;">
-                                Signup
-                            </button>
-            
-                        </form>
-                    </section>
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-
 
 
 {% if messages %}
@@ -157,5 +74,6 @@
 {% endif %}
 {% endblock content %}
 {% block javascript %}
+<script src="static/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 {% endblock javascript %}

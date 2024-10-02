@@ -73,6 +73,11 @@ def signin(request):
             return redirect('home')
         
 #------------
+def user_profile(request):
+    return render(request, 'user.html', {
+        'user': request.user  
+    })
+
 def user_list(request):
     if not request.user.is_authenticated:
         return redirect('signin') 

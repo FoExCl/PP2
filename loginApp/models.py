@@ -220,6 +220,7 @@ class Productos(models.Model):
     color_prod = models.CharField(db_column='Color_Prod', max_length=30, blank=True, null=True)  # Field name made lowercase.
     genero_prod = models.CharField(db_column='Genero_Prod', max_length=30, blank=True, null=True)  # Field name made lowercase.
     precio_unitario_venta = models.FloatField(db_column='Precio_unitario_venta', blank=True, null=True)  # Field name made lowercase.
+    cantidad_producto = models.IntegerField()
     descripcion = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
