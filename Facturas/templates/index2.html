@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FacturaciónEliBaby</title>
+    <link rel="stylesheet" href="eli.css">
+</head>
+<body>
+    <h1>CAJA > VENTAS > NUEVA FACTURA</h1>
+
+    <div class="factura-datos">
+        <label for="numero-factura"><b>Nº factura:</b></label>
+        <input type="text" id="numero-factura" value="" readonly>
+        <label for="cliente"><b>Cliente:</b></label>
+        <input type="text" id="cliente" value="">
+    </div>
+
+    <section id="pantalla-dividida">
+
+    <div class="izquierda">
+
+        <table class=" table">
+            <thead>
+                <tr>
+                  
+                 
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio-Venta</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+                
+                
+              </thead>
+              <tbody class="table-group-divider">
+                
+              </tbody>
+            </table>
+    </div>
+
+    <div class="derecha">
+        <h1>Agregar Articulo</h1>
+    
+        <div class="agregar-producto">
+            <label for="codigo">Código:</label>
+            <input type="text" id="codigo">
+            <button class="btn-6">Buscar</button><br><br>
+            <label for="Prendas">Prendas:</label>
+            <select id="articulo">
+              <option value="">Seleccionar Prendas</option>
+              <option value="Remeras">Remeras</option>
+              <option value="Pantalon">Pantalon</option>
+              <option value="Medias">Medias</option>
+              <option value="Zapatos">Zapatos</option>
+              <option value="Chupete">Chupete</option>
+              <option value="Vestido">Vestido</option>
+            </select><br><br>
+            
+            
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio">
+            <button class="btn-5">Agregar</button> 
+            
+    </div>   
+
+    </section>
+
+
+    <div class="total">
+        <span>Total:</span>
+        <span id="total">0.00</span>
+    </div><br>
+
+    <button class="btn-1">
+      <span class="transition"></span>
+      <span class="gradient"></span>
+      <span class="label">Actualizar precios</span>
+    </button>
+    
+    <button class="btn-2">
+      <span class="transition"></span>
+      <span class="gradient"></span>
+      <span class="label">Eliminar Producto</span>
+    </button>
+    
+    <button class="btn-3">
+      <span class="transition"></span>
+      <span class="gradient"></span>
+      <span class="label">Generar Venta</span>
+    </button>
+    
+    <button class="btn-4">
+      <span class="transition"></span>
+      <span class="gradient"></span>
+      <span class="label">Salir</span>
+    </button>
+
+    
+   
+   <script src="javascript.js"></script>
+   <script src="https:/kit.fontawesome.com/b362b6ed8f.js" crossorigin="anonymous"></script>
+</body>
+</html>

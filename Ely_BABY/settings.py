@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "InventarioApp",
+    "Facturas",
 
 ]
 
@@ -87,9 +88,9 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'p1_ely_baby',
+        'NAME': 'elybaby',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
