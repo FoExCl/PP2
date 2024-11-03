@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from loginApp import views
-from InventarioApp.views import inventario_view, nuevo_registro_view, editar_producto_view, borrar_producto_view
 
 
 urlpatterns = [
@@ -25,12 +24,16 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('signin/', views.signin, name='signin'),
     path('signup/', views.signup, name='signup'),
+
     path('users/', views.user_list, name='userlist'),
+    path('users/add/', views.add_user, name='add_user'),
+    path('users/edit/<int:user_id>/', views.edit_user, name='edit_user'),
+    path('users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
     path('user/', views.user_profile, name='user'),
+    
     path('logout/', views.exit, name='exit'),
-    path('inventario/', inventario_view, name='inventario'),
-    path('inventario/nuevo_registro/', nuevo_registro_view, name='nuevo_registro'),
-    path('inventario/editar_producto/<int:producto_id>/', editar_producto_view, name='editar_producto'),
-    path('inventario/borrar_producto/<int:producto_id>/', borrar_producto_view, name='borrar_producto'),
-     
+    path('inventario/', include('InventarioApp.urls')),
+    path('caja/', include('CajaApp.urls')),
+    path('ventas/', include('VentasApp.urls'))
 ]
+    
