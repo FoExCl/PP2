@@ -50,6 +50,7 @@ class AuthUser(models.Model):
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
 
+
     class Meta:
         managed = False
         db_table = 'auth_user'
@@ -195,6 +196,7 @@ class Empleados(models.Model):
     correo = models.CharField(max_length=50)
     direccion = models.CharField(max_length=60, blank=True, null=True)
     id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    
 
     class Meta:
         managed = False

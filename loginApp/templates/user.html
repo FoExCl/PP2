@@ -32,10 +32,14 @@
                                 <strong>Nombre de Usuario:</strong>
                                 <p>{{ user.username }}</p> 
                             </div>
+                            
                         </div>
                         <hr>
+                        <!-- Botón para abrir el modal -->
                         <div class="text-center">
-                            <a href="" class="btn btn-secondary">Editar perfil</a> 
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="{{ user.id }}">
+                                Editar perfil
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -43,5 +47,43 @@
         </div>
     </section>
 </div>
+
+<!-- Modal para editar usuario -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- El contenido del formulario de edición será cargado dinámicamente aquí -->
+                <div id="modalEditFormContent" class="mb-3"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para cargar el formulario de edición vía AJAX -->
+<script>
+    var editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;  // Botón que abre el modal
+        var userId = button.getAttribute('data-user-id');  // Extraer el ID del usuario
+        
+        // Cargar el contenido del formulario de edición vía AJAX
+        fetch("{% url 'edit_user' 0 %}".replace('0', userId))
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalEditFormContent').innerHTML = html;  // Insertar el formulario en el modal
+            })
+            .catch(err => {
+                console.error("Error al cargar el formulario de edición: ", err);
+            });
+    });
+</script>
 
 {% endblock content %}
