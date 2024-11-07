@@ -74,7 +74,7 @@ def signin(request):
                })
         else:
             login(request, user)
-            return redirect('home')
+            return redirect('user')
 
 def exit(request):
     logout(request)

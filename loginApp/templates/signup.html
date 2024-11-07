@@ -4,54 +4,53 @@
 {% block content %}
 {% include 'navbar.html' %}
 
-
-<div class="content container-fluid position-relative" style="margin-left: 106px; margin-top: 1rem;">
-    <div class="row justify-content-center"> 
-        <div class="col-lg-8 col-md-10 col-sm-12"> 
-            <div class="card card-body mb-5"> 
-                <h1 class="text-center">Agregar Usuario</h1>
+<main class="container">
+    <section class="d-flex justify-content-center align-items-center vh-100">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5"> 
+            <div class="card card-body mb-5 shadow">
+                <h1 class="text-center mb-4">Agregar Usuario</h1>
                 <form method="POST" action="{% url 'signup' %}">
-                    {{ error }}
+                    {% if error %}
+                        <div class="alert alert-danger text-center">{{ error }}</div>
+                    {% endif %}
                     {% csrf_token %}
                     <hr>
-                    
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nombre">Nombre:</label>
+                            <label for="nombre" class="form-label">Nombre:</label>
                             <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese nombre" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="apellido">Apellido:</label>
+                            <label for="apellido" class="form-label">Apellido:</label>
                             <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Ingrese apellido" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="correo">Email:</label>
-                            <input type="email" name="correo" id="correo" class="form-control" placeholder="Ingrese correo electronico" required>
+                            <label for="correo" class="form-label">Email:</label>
+                            <input type="email" name="correo" id="correo" class="form-control" placeholder="Ingrese correo electrónico" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="usuario">Usuario:</label>
+                            <label for="usuario" class="form-label">Usuario:</label>
                             <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Ingrese nombre de usuario" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="password1">Contraseña:</label>
+                            <label for="password1" class="form-label">Contraseña:</label>
                             <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingrese contraseña" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="password2">Confirme contraseña:</label>
+                            <label for="password2" class="form-label">Confirme contraseña:</label>
                             <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirme contraseña" required>
                         </div>
 
-                
-
-                        <div class="col-md-6 mb-3">
-                            <label for="user_type">Tipo de Usuario:</label>
+                        <div class="col-md-12 mb-3">
+                            <label for="user_type" class="form-label">Tipo de Usuario:</label>
                             <select name="user_type" id="user_type" class="form-control" required>
                                 <option value="basic">Vendedor</option>
                                 <option value="admin">Administrador</option>
@@ -67,6 +66,6 @@
                 </form>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 {% endblock content %}

@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'p1_ely_baby',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'NAME': 'bjvhcp3oyzg8gz8rofmk',
+        'USER': 'ujnhca2f8jmcyl9u',
+        'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
+        'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
         'PORT': '3306'
     }
 }
