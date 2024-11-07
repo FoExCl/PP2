@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'cajaapp/css/caja.css' %}">
 </head>
 <body>
+  {% include 'navbar.html' %}
   {% if messages %}
   <div class="alert alert-danger" role="alert">
     {% for message in messages %}
@@ -16,12 +17,12 @@
     {% endfor %}
   </div>
   {% endif %}
-  {% include 'navbar.html' %}
-  <div class="title-box d-flex justify-content-center">
-    <h1>Caja</h1>
-  </div>
+  
 
-  <div class="container">
+  <div class="container "style="margin-top: 1;">
+    <div class="title-box d-flex justify-content-center">
+      <h1>Caja</h1>
+    </div>
     <div class="container-box">
       <div class="header">
         <div class="search-container">
@@ -43,7 +44,7 @@
               <th>Estado Caja</th>
               <th>Fecha Apertura</th>
               <th>Fecha Cierre</th>
-              <th>Total Egresos</th>
+              <th>Monto Inicial</th>
               <th>Total Ingresos</th>
               <th>Detalles</th>
             </tr>

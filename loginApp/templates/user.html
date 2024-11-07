@@ -2,15 +2,14 @@
 {% load static %}
 
 {% block content %}
-{% include 'navbar.html' %}  <!-- Incluimos la barra de navegación -->
+{% include 'navbar.html' %}
 
-<div class="content" style="margin-left: 206px; margin-top: 1rem;">
+<div class="content container-fluid my-4">
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <br>
-                    <h3 class="text-center"><i class="fas fa-user me-2"></i>Perfil del Usuario</h3> <!-- Título del perfil -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <h3 class="text-center"><i class="fas fa-user me-2"></i>Perfil del Usuario</h3>
                     <br>
                     <div class="card card-body">
                         <h4 class="text-center">Detalles de Usuario</h4>
@@ -18,24 +17,26 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <strong>Nombre:</strong>
-                                <p>{{ user.first_name }}</p> <!-- Nombre del usuario -->
+                                <p>{{ user.first_name }}</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <strong>Apellido:</strong>
-                                <p>{{ user.last_name }}</p> 
+                                <p>{{ user.last_name }}</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <strong>Email:</strong>
-                                <p>{{ user.email }}</p> 
+                                <p>{{ user.email }}</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <strong>Nombre de Usuario:</strong>
-                                <p>{{ user.username }}</p> 
+                                <p>{{ user.username }}</p>
                             </div>
                         </div>
                         <hr>
                         <div class="text-center">
-                            <a href="" class="btn btn-secondary">Editar perfil</a> 
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="{{ user.id }}">
+                                Editar perfil
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -43,5 +44,39 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalEditFormContent" class="mb-3"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var userId = button.getAttribute('data-user-id');
+        
+        fetch("{% url 'edit_user' 0 %}".replace('0', userId))
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalEditFormContent').innerHTML = html;
+            })
+            .catch(err => {
+                console.error("Error al cargar el formulario de edición: ", err);
+            });
+    });
+</script>
 
 {% endblock content %}

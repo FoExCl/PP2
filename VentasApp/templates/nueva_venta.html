@@ -10,10 +10,15 @@
 </head>
 <body>
     {% include 'navbar.html' %}
+<<<<<<< HEAD
+=======
+    <div class="container" style="margin-left: 235px; margin-top: 1;">
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
     <div class="title-box d-flex justify-content-center">
         <h1>Nueva Venta</h1>
     </div>
 
+<<<<<<< HEAD
     <div class="factura-datos">
         <label for="numero-factura"><b>Nº Venta:</b></label>
         <input type="text" id="numero-factura" value="" readonly>
@@ -75,6 +80,82 @@
         </div>
         <form method="post">
             {% csrf_token %}
+=======
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="factura-datos">
+            <label for="numero-venta"><b>Nº Venta:</b></label>
+            <input type="text" id="numero-venta" value="{{ id_venta }}" readonly>
+        
+            <label for="numero-factura"><b>Nº factura:</b></label>
+            <input type="text" id="numero-factura" value="{{ id_factura }}" readonly>
+
+            <label for="numero-caja"><b>Nº Caja:</b></label>
+            <input type="text" id="numero-caja" value="{{ id_caja }}" readonly>
+        </div>
+
+        <div class="agregar-producto">
+            <div class="header d-flex flex-column align-items-center">
+                <h3>Agregar Producto</h3>
+                <button type="button" class="btn-6" id="abrirBusqueda"><i class="fa-solid fa-magnifying-glass"></i> Buscar Producto</button>
+            </div>  
+        </div>
+
+        <div class="container-box">
+            <div class="header d-flex flex-column align-items-center">
+                <h3>Detalle de la Orden</h3>
+            </div> 
+            <div class="table-num1">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>  
+                            <th>Descripcion</th>
+                            <th>Cant</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" id="detalle-orden">
+                    </tbody>
+                </table>
+            </div> 
+            <div class="subtotal-total">
+                <span>Subtotal:</span>
+                <span id="subtotal"><i class="fa-solid fa-dollar-sign"></i>0.00</span>
+            </div>
+        </div>
+
+        <div class="descuento">
+            <div class="linea-uno">
+                <strong>Descuento:</strong>
+                <input type="number" id="descuento-input" name="descuento" disabled/>
+            </div>
+            <div class="linea-dos">
+                <button type="button" class="tipo-descuento" data-tipo="porcentaje"><i class="fa-solid fa-percent"></i> Porcentaje</button>
+                <button type="button" class="tipo-descuento" data-tipo="valor-fijo"><i class="fa-solid fa-dollar-sign"></i> Valor Fijo</button>
+            </div>
+            <div class="linea-uno">
+                <strong><i class="fa-solid fa-hand-holding-dollar"></i> Método de pago:</strong>
+                <select id="metodo-pago" name="metodo_pago">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                </select>
+            </div>
+            <div class="subtotal-total">
+                <span>Total:</span>
+                <span id="total"><i class="fa-solid fa-dollar-sign"></i>0.00</span>
+            </div>
+            <input type="hidden" id="total-field" name="total" value="0">
+        </div>
+
+        <div class="factura-datos">
+            <div class="header mb-4 d-flex flex-column align-items-center">
+                <h3><i class="fa-regular fa-address-card"></i> Agregar Cliente</h3>
+            </div>
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
             <div class="row mb-3">
                 <div class="col">
                     <label for="nombre_cli" class="form-label">Nombre</label>
@@ -85,7 +166,11 @@
                     <input type="text" class="form-control" id="apellido_cli" name="apellido_cli" required>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="row">
+=======
+            <div class="row mb-3">
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
                 <div class="col">
                     <label for="dni" class="form-label">DNI</label>
                     <input type="text" class="form-control" id="dni" name="dni" required>
@@ -95,6 +180,7 @@
                     <input type="text" class="form-control" id="telefono" name="telefono" required>
                 </div>
             </div>
+<<<<<<< HEAD
         </form>
     </div>
     
@@ -104,6 +190,15 @@
     </div>
 
 
+=======
+        </div>
+
+        <div class="options-box">
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Generar Venta</button>
+            <a href="{% url 'ventas' %}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Salir</a>
+        </div>
+    </form>
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 
     <div id="panelBusqueda" class="sidenav">
         <a href="javascript:void(0)" id="cerrarBusqueda" class="closebtn">&times;</a>
@@ -116,6 +211,10 @@
             <table class="table table-striped table-bordered">
               <thead class="table-dark">
                 <tr>
+<<<<<<< HEAD
+=======
+                  <th>ID</th>
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
                   <th>Descripcion</th>
                   <th>Talle</th>
                   <th>Género</th>
@@ -125,8 +224,14 @@
               </thead>
               <tbody id="stock-table-body">
                 {% for producto in productos %}
+<<<<<<< HEAD
                 <tr data-id="{{ producto.id_productos }}"
                     class="{% if producto.cantidad_producto == 0 %} bg-danger {% elif producto.cantidad_producto < 6 %} bg-warning {% endif %}">
+=======
+                <tr data-id="{{ producto.id_productos }}" data-cantidad="{{ producto.cantidad_producto }}"
+                class="{% if producto.cantidad_producto == 0 %} bg-danger {% elif producto.cantidad_producto < 6 %} bg-warning {% endif %}">
+                  <td>{{ producto.id_productos }}</td>
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
                   <td>{{ producto.descripcion }}</td>
                   <td>{{ producto.talle_prod }}</td>
                   <td>{{ producto.genero_prod }}</td>
@@ -155,7 +260,11 @@
     <script src="https://kit.fontawesome.com/b362b6ed8f.js" crossorigin="anonymous"></script>
     <script>
         document.getElementById('abrirBusqueda').addEventListener('click', function() {
+<<<<<<< HEAD
             document.getElementById('panelBusqueda').style.width = "550px";
+=======
+            document.getElementById('panelBusqueda').style.width = "600px";
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
         });
 
         document.getElementById('cerrarBusqueda').addEventListener('click', function() {
@@ -181,7 +290,14 @@
             document.getElementById("product-info").textContent = `Mostrando ${totalFilteredProducts} productos.`;
           }
       
+<<<<<<< HEAD
           document.getElementById("search-btn").onclick = buscarProductos;
+=======
+          const searchBtn = document.getElementById("search-btn");
+          if (searchBtn) {
+              searchBtn.onclick = buscarProductos;
+          }
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
           document.getElementById("buscarProducto").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
               event.preventDefault();
@@ -192,6 +308,7 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+<<<<<<< HEAD
           const products = Array.from(document.querySelectorAll("#stock-table-body tr"));
       
           function buscarProductos() {
@@ -213,6 +330,27 @@
         });
     </script>
     <script>
+=======
+            const products = Array.from(document.querySelectorAll("#stock-table-body tr"));
+    
+            function buscarProductos() {
+                const searchInput = document.getElementById("buscarProducto").value.toLowerCase();
+                const filteredProducts = products.filter(product => {
+                    const productDescription = product.querySelector("td").textContent.toLowerCase();
+                    return productDescription.includes(searchInput);
+                });
+    
+                products.forEach(product => product.style.display = "none");
+                filteredProducts.forEach(product => product.style.display = "");
+    
+                const totalFilteredProducts = filteredProducts.length;
+                document.getElementById("product-info").textContent = `Mostrando ${totalFilteredProducts} productos.`;
+            }
+    
+            document.getElementById("buscarProducto").addEventListener("input", buscarProductos);
+        });
+    
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
         function agregarProducto(id, descripcion, precio) {
             const filasExistentes = Array.from(document.querySelectorAll(".table-group-divider tr"));
             const productoExistente = filasExistentes.find(row => row.dataset.id === id.toString());
@@ -222,22 +360,50 @@
                 return;
             }
         
+<<<<<<< HEAD
+=======
+            const cantidadProductoDisponible = parseInt(document.querySelector(`tr[data-id="${id}"]`).dataset.cantidad);
+        
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
             const nuevaFila = document.createElement("tr");
             nuevaFila.dataset.id = id;
         
             nuevaFila.innerHTML = `
+<<<<<<< HEAD
                 <td>${descripcion}</td>
                 <td><input type="number" value="1" min="1" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calcularSubtotal();" id="cantidad-${id}"></td>
                 <td class="precio"><i class="fa-solid fa-dollar-sign"></i>${precio.toFixed(2)}</td>
                 <td><button class="btn-custom-red" onclick="eliminarFila(this)"><i class="fa-solid fa-trash-can"></i></button></td>
             `;
             
+=======
+                <td>${id}</td>
+                <td>${descripcion}</td>
+                <td>
+                    <input type="number" name="cantidad_${id}" value="1" min="1" 
+                        oninput="verificarCantidad(this, ${cantidadProductoDisponible}); 
+                                  actualizarSubtotalProducto(this, ${precio}); 
+                                  calcularSubtotal();" 
+                        data-precio="${precio}" 
+                        data-id="${id}" 
+                        id="cantidad-${id}">
+                </td>
+                <td class="precio"><i class="fa-solid fa-dollar-sign"></i>${precio.toFixed(2)}</td>
+                <td class="producto-subtotal"><i class="fa-solid fa-dollar-sign"></i>${precio.toFixed(2)}</td>
+                <td><button class="btn-custom-red" onclick="eliminarFila(this)"><i class="fa-solid fa-trash-can"></i></button></td>
+                <input type="hidden" name="id_prod" value="${id}">
+                <input type="hidden" name="cant_prod_vendido_${id}" value="1">
+                <input type="hidden" name="subtotal_${id}" value="${precio.toFixed(2)}">
+            `;
+        
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
             const detalleOrden = document.querySelector(".table-group-divider");
             detalleOrden.appendChild(nuevaFila);
         
             calcularSubtotal();
         }
         
+<<<<<<< HEAD
         function eliminarFila(button) {
             const fila = button.closest("tr");
             fila.remove();
@@ -246,6 +412,47 @@
         }
     </script>
     <script>
+=======
+        function verificarCantidad(input, cantidadDisponible) {
+            const cantidadIngresada = parseInt(input.value);
+            const idProducto = input.dataset.id;
+        
+            if (cantidadIngresada > cantidadDisponible) {
+                alert(`Solo hay ${cantidadDisponible} unidades disponibles.`);
+                input.value = cantidadDisponible;
+        
+                actualizarCantidadVendida(idProducto, cantidadDisponible);
+            } else {
+                actualizarCantidadVendida(idProducto, cantidadIngresada);
+            }
+        }
+        
+        function actualizarCantidadVendida(id, cantidad) {
+            const inputCantidad = document.querySelector(`#cantidad-${id}`);
+            if (inputCantidad) {
+                inputCantidad.value = cantidad;
+            } else {
+                console.error(`No se encontró el input para el producto con ID ${id}`);
+            }
+        }
+    
+        function actualizarSubtotalProducto(input, precio) {
+            const cantidad = parseInt(input.value) || 0;
+            const subtotalProducto = cantidad * precio;
+            
+            const fila = input.closest("tr");
+            const celdaSubtotal = fila.querySelector(".producto-subtotal");
+            celdaSubtotal.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${subtotalProducto.toFixed(2)}`;
+        }
+
+        function eliminarFila(button) {
+            const fila = button.closest("tr");
+            fila.remove();
+    
+            calcularSubtotal();
+        }
+    
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
         function calcularSubtotal() {
             let subtotal = 0;
             const rows = document.querySelectorAll(".table-group-divider tr");
@@ -264,11 +471,20 @@
             const descuentoInput = document.querySelector('.descuento input');
             let descuento = 0;
     
+<<<<<<< HEAD
             if (document.querySelector('.descuento button.selected')) {
                 if (document.querySelector('.descuento button.selected').textContent.trim() === "Porcentaje") {
                     const porcentaje = parseFloat(descuentoInput.value) || 0;
                     descuento = (subtotal * porcentaje) / 100;
                 } else if (document.querySelector('.descuento button.selected').textContent.trim() === "Valor Fijo") {
+=======
+            const selectedButton = document.querySelector('.descuento button.selected');
+            if (selectedButton) {
+                if (selectedButton.textContent.trim() === "Porcentaje") {
+                    const porcentaje = parseFloat(descuentoInput.value) || 0;
+                    descuento = (subtotal * porcentaje) / 100;
+                } else if (selectedButton.textContent.trim() === "Valor Fijo") {
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
                     descuento = parseFloat(descuentoInput.value) || 0;
                 }
             }
@@ -276,10 +492,16 @@
             let total = subtotal - descuento;
             total = Math.max(total, 0);
             document.getElementById("total").innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${total.toFixed(2)}`;
+<<<<<<< HEAD
+=======
+    
+            document.getElementById("total-field").value = total.toFixed(2);
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
         }
     
         document.querySelectorAll('.descuento button').forEach(button => {
             button.addEventListener('click', () => {
+<<<<<<< HEAD
                 if (button.classList.contains('selected')) {
                     button.classList.remove('selected');
                     const inputDescuento = document.querySelector('.descuento input');
@@ -300,12 +522,24 @@
                     }
                 }
                 calcularTotal(parseFloat(document.getElementById("subtotal").textContent));
+=======
+                document.querySelectorAll('.descuento button').forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+    
+                const inputDescuento = document.querySelector('.descuento input');
+                inputDescuento.disabled = button.classList.contains('sin-descuento');
+                inputDescuento.value = '';
+                if (!button.classList.contains('sin-descuento')) inputDescuento.focus();
+    
+                calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
             });
         });
     
         document.querySelector('.descuento input').addEventListener('input', function() {
             const selectedButton = document.querySelector('.descuento button.selected');
             if (selectedButton && selectedButton.textContent.trim() === "Porcentaje") {
+<<<<<<< HEAD
                 if (this.value > 100) {
                     this.value = 100;
                 }
@@ -313,5 +547,13 @@
             calcularTotal(parseFloat(document.getElementById("subtotal").textContent));
         });
     </script>
+=======
+                if (this.value > 100) this.value = 100;
+            }
+            calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
+        });
+    </script>
+    
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 </body>
 </html>

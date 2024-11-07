@@ -16,7 +16,10 @@ def caja_view(request):
 def detalle_caja_view(request, caja_id):
     caja = get_object_or_404(Cajas, id_caja=caja_id)
 
+<<<<<<< HEAD
     # Si la caja está cerrada, usar la fecha de cierre
+=======
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
     if caja.fechacierrecaja:
         fecha_cierre = caja.fechacierrecaja
     else:
@@ -78,5 +81,9 @@ def apertura_view(request):
         'next_caja_id': next_caja_id, 
         'empleados': empleados, 
         'current_time': current_time
+<<<<<<< HEAD
     })
     
+=======
+    })
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a

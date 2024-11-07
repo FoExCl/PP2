@@ -4,6 +4,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import render
+from loginApp.models import AuthUser
+from loginApp.forms import AddUserForm, EditarUsuarioForm
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 # Create your views here.
@@ -70,7 +74,11 @@ def signin(request):
                })
         else:
             login(request, user)
-            return redirect('home')
+            return redirect('user')
+
+def exit(request):
+    logout(request)
+    return redirect('signin')
         
 #------------
 def user_profile(request):
@@ -80,15 +88,59 @@ def user_profile(request):
 
 def user_list(request):
     if not request.user.is_authenticated:
-        return redirect('signin') 
-    users = User.objects.all()
+        return redirect('signin')  # Redirige a la página de inicio de sesión si no está autenticado
+    
+    users = AuthUser.objects.all()
     for user in users:
         if user.is_superuser:
-            user.role = "Administrador"
-        else:
-            user.role = "Vendedor"
+            user.role = "Administrador"  
+        else: 
+            user.role ="Vendedor"
+    
     return render(request, 'userlist.html', {'users': users})
 
-def exit(request):
-    logout(request)
-    return redirect('signin')
+def add_user(request):
+    if request.method == 'POST':
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "El usuario ha sido creado correctamente.")
+            return redirect('userlist')
+    else:
+        form = AddUserForm()
+    
+    return render(request, 'add_user.html', {'form': form})
+
+
+def edit_user(request, user_id):
+    user = get_object_or_404(AuthUser, id=user_id)
+
+    if request.method == 'POST':
+        form = EditarUsuarioForm(request.POST, instance=user)
+        if form.is_valid():
+            user.username = form.cleaned_data['username']
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            
+            user.save()
+            messages.success(request, "El usuario ha sido actualizado correctamente.")
+            return redirect('userlist')
+    else:
+        form = EditarUsuarioForm(instance=user)
+
+    return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+
+
+def delete_user(request, user_id):
+    user = get_object_or_404(AuthUser, id=user_id)
+    if request.user.id == user_id:
+        messages.error(request, "No puedes eliminar tu propia cuenta.")
+        return redirect('userlist')
+    if request.method == 'POST':
+        user.delete()  # Elimina el usuario
+        messages.success(request, "El usuario ha sido eliminado correctamente.")
+        return redirect('userlist')
+    messages.error(request, "Error en la eliminación del usuario.")
+    return redirect('userlist')

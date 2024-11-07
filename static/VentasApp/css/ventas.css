@@ -41,8 +41,13 @@ body {
 
 #search-input {
   flex: 2;
+<<<<<<< HEAD
   min-width: 500px; /* Cambia 200px a 300px o más según lo desees */
   max-width: 100%;  /* Para asegurarte de que no exceda el contenedor */
+=======
+  min-width: 500px;
+  max-width: 100%;
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 }
 
 

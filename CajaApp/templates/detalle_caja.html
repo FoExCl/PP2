@@ -11,11 +11,10 @@
 <body>
   {% include 'navbar.html' %}
 
-  <div class="title-box d-flex justify-content-center">
-    <h1>Detalle de Caja</h1>
-  </div>
-
-  <div class="container">
+  <div class="container" style="margin-left: 225px; margin-top: 1;">
+    <div class="title-box d-flex justify-content-center">
+      <h1>Detalle de Caja</h1>
+    </div>
     <div class="container-box">
       <div class="header">
         <div>
@@ -23,7 +22,7 @@
           <p><strong>Empleado a cargo:</strong> {{ caja.dni.nombre }} {{ caja.dni.apellido }}</p>
           <p><strong>Fecha de Apertura:</strong> {{ caja.fechaaperturacaja }}</p>
           <p><strong>Fecha de Cierre:</strong> 
-            {% if caja.estado_caja == "Abierta" %}
+          {% if caja.estado_caja == "Abierta" %}
             Aún no se ha cerrado
           {% else %}
             {{ caja.fechacierrecaja }}

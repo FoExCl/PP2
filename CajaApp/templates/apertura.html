@@ -10,6 +10,8 @@
 </head>
 <body>
   {% include 'navbar.html' %}
+
+  <div class="container" style="margin-left: 225px; margin-top: 1;">
   <div class="title-box ">
    <h1 style="text-decoration: none; color: black;">Apertura de Caja</h1>
   </div>
@@ -35,7 +37,7 @@
       </div>
       <div class="mb-3">
         <label for="total_egresos_caja" class="form-label">Egreso Inicial</label>
-        <input type="text" id="soloNumsPuntosComas" oninput="this.value = this.value.replace(/[^0-9.]/g, '');" class="form-control" id="total_egresos_caja" name="total_egresos_caja" min="0" step="0.01" required>
+        <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '');" class="form-control" id="total_egresos_caja" name="total_egresos_caja" min="0" step="0.01" required>
       </div>
     </div>
     <div class="options-box">
@@ -43,13 +45,8 @@
       <a href="{% url 'caja' %}" class="btn btn-danger" style="margin-left: auto;"><i class="fa-solid fa-xmark"></i> Cancelar</a>
     </div>
     </form>
+  </div>
 <script src="https://kit.fontawesome.com/b362b6ed8f.js" crossorigin="anonymous"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', (event) => {
-      const now = new Date();
-      const formattedDate = now.toISOString().slice(0, 16);
-      document.getElementById('fechaaperturacaja').value = formattedDate;
-  });
-</script>
+<script src="{% static 'cajaapp/js/apertura.js' %}"></script>
 </body>
 </html>
