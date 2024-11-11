@@ -2,17 +2,16 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<form method="post" class="form-container" id="editUserForm">
+<form method="post" class="form-container" id="addUserForm">
     {% csrf_token %}
     {% crispy form %}
-    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 
 <script>
-    document.getElementById('editUserForm').addEventListener('submit', function(e) {
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const userId = "{{ empleado.id_user.id }}";
-        fetch(`/users/edit/${userId}/`, {
+        fetch("{% url 'add_user' %}", {
             method: 'POST',
             body: new FormData(this),
             headers: {
@@ -22,10 +21,10 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Usuario actualizado exitosamente');
+                alert('Usuario agregado exitosamente');
                 location.reload();
             } else {
-                alert('Error al actualizar usuario');
+                alert('Error al agregar usuario');
             }
         });
     });
