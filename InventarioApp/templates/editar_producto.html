@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9">
+  <title>Editar Producto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'inventarioapp/css/editar_producto.css' %}">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <div class="container"  style="margin-left: 225px; margin-top: 1;">
+  <div class="title-box">
+    <h1><a href="{% url 'inventario' %}" style="text-decoration: none; color: black;"></a>Editar Producto</h1>
+  </div>
+
+  <form action="{% url 'editar_producto' producto.id_productos %}" method="POST">
+  {% csrf_token %}
+
+  <div class="container-box">
+    <div class="form-group">
+      <label>ID del Producto:</label>
+      <p class="form-control-static">{{ producto.id_productos }}</p>
+    </div>
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <input type="text" id="descripcion" name="descripcion" class="form-control" value="{{ producto.descripcion }}">
+    </div>
+  </div>
+
+  <div class="container-box">
+    <div class="form-group">
+      <label for="tipo_prod">Tipo de Producto:</label>
+      <input type="text" id="tipo_prod" name="tipo_prod" class="form-control" value="{{ producto.tipo_prod }}">
+    </div>
+  
+    <div class="form-group">
+      <label for="talle_prod">Talle:</label>
+      <input type="text" id="talle_prod" name="talle_prod" class="form-control" value="{{ producto.talle_prod }}">
+    </div>
+  
+    <div class="form-group">
+      <label for="genero_prod">Género:</label>
+      <input type="text" id="genero_prod" name="genero_prod" class="form-control" value="{{ producto.genero_prod }}">
+    </div>
+  
+    <div class="form-group">
+      <label for="color_prod">Color:</label>
+      <input type="text" id="color_prod" name="color_prod" class="form-control" value="{{ producto.color_prod }}">
+    </div>
+  </div>
+  <div class="container-box">
+    <div class="form-group">
+      <label for="precio_unitario_venta">Precio de Venta:</label>
+      <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '');" id="precio_unitario_venta" name="precio_unitario_venta" class="form-control" value="{{ producto.precio_unitario_venta }}">
+    </div>
+  
+    <div class="form-group">
+      <label for="cantidad_producto">Cantidad:</label>
+      <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" id="cantidad_producto" name="cantidad_producto" class="form-control" value="{{ producto.cantidad_producto }}">
+    </div>
+  </div>
+  <div class="options-box">
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Confirmar</button>
+    <button type="button" class="btn btn-danger"  onclick="confirmDelete()"><i class="fa-solid fa-trash-can"></i> Borrar</button>
+    <a href="{% url 'inventario' %}" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i> Cancelar</a>
+  </div>
+</form>
+</div>
+<script src="https://kit.fontawesome.com/b362b6ed8f.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootbox@5.5.2/dist/bootbox.min.js"></script>
+<script src="{% static 'InventarioApp/js/editar_producto.js' %}"></script>
+</body>
+</html>

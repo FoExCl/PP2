@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+  
+         {% include 'navbar.html' %}
+         
+    
+    {% else %}
+         {% include 'signin.html' %}
+         
+    {% endif %}
+
+
+{% endblock content %}

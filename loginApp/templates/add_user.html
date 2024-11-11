@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="post" class="form-container" id="addUserForm">
+    {% csrf_token %}
+    {% crispy form %}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+<script>
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch("{% url 'add_user' %}", {
+            method: 'POST',
+            body: new FormData(this),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Usuario agregado exitosamente');
+                location.reload();
+            } else {
+                alert('Error al agregar usuario');
+            }
+        });
+    });
+</script>
+{% endblock %}

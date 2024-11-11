@@ -1,0 +1,369 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'VentasApp/css/nueva_venta.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container" style="margin-left: 235px; margin-top: 1;">
+    <div class="title-box d-flex justify-content-center">
+        <h1>Nueva Venta</h1>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="factura-datos">
+            <label for="numero-venta"><b>Nº Venta:</b></label>
+            <input type="text" id="numero-venta" value="{{ id_venta }}" readonly>
+        
+            <label for="numero-factura"><b>Nº factura:</b></label>
+            <input type="text" id="numero-factura" value="{{ id_factura }}" readonly>
+
+            <label for="numero-caja"><b>Nº Caja:</b></label>
+            <input type="text" id="numero-caja" value="{{ id_caja }}" readonly>
+        </div>
+
+        <div class="agregar-producto">
+            <div class="header d-flex flex-column align-items-center">
+                <h3>Agregar Producto</h3>
+                <button type="button" class="btn-6" id="abrirBusqueda"><i class="fa-solid fa-magnifying-glass"></i> Buscar Producto</button>
+            </div>  
+        </div>
+
+        <div class="container-box">
+            <div class="header d-flex flex-column align-items-center">
+                <h3>Detalle de la Orden</h3>
+            </div> 
+            <div class="table-num1">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>  
+                            <th>Descripcion</th>
+                            <th>Cant</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" id="detalle-orden">
+                    </tbody>
+                </table>
+            </div> 
+            <div class="subtotal-total">
+                <span>Subtotal:</span>
+                <span id="subtotal"><i class="fa-solid fa-dollar-sign"></i>0.00</span>
+            </div>
+        </div>
+
+        <div class="descuento">
+            <div class="linea-uno">
+                <strong>Descuento:</strong>
+                <input type="number" id="descuento-input" name="descuento" disabled/>
+            </div>
+            <div class="linea-dos">
+                <button type="button" class="tipo-descuento" data-tipo="porcentaje"><i class="fa-solid fa-percent"></i> Porcentaje</button>
+                <button type="button" class="tipo-descuento" data-tipo="valor-fijo"><i class="fa-solid fa-dollar-sign"></i> Valor Fijo</button>
+            </div>
+            <div class="linea-uno">
+                <strong><i class="fa-solid fa-hand-holding-dollar"></i> Método de pago:</strong>
+                <select id="metodo-pago" name="metodo_pago">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                </select>
+            </div>
+            <div class="subtotal-total">
+                <span>Total:</span>
+                <span id="total"><i class="fa-solid fa-dollar-sign"></i>0.00</span>
+            </div>
+            <input type="hidden" id="total-field" name="total" value="0">
+        </div>
+
+        <div class="factura-datos">
+            <div class="header mb-4 d-flex flex-column align-items-center">
+                <h3><i class="fa-regular fa-address-card"></i> Agregar Cliente</h3>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="nombre_cli" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre_cli" name="nombre_cli" required>
+                </div>
+                <div class="col">
+                    <label for="apellido_cli" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido_cli" name="apellido_cli" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni" name="dni" required>
+                </div>
+                <div class="col">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="options-box">
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Generar Venta</button>
+            <a href="{% url 'ventas' %}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Salir</a>
+        </div>
+    </form>
+
+    <div id="panelBusqueda" class="sidenav">
+        <a href="javascript:void(0)" id="cerrarBusqueda" class="closebtn">&times;</a>
+        <div class="header d-flex flex-column align-items-center">
+            <h3 style="text-align: center;">Buscar Producto</h3>
+            <input type="text" id="buscarProducto" placeholder="Buscar producto por Descripcion" style="width: 80%; margin: 10px;">
+        </div>
+        <div id="product-info" class="text-center mb-2">Mostrando 0 productos.</div>
+        <div class="table-num2">
+            <table class="table table-striped table-bordered">
+              <thead class="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Descripcion</th>
+                  <th>Talle</th>
+                  <th>Género</th>
+                  <th>Color</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="stock-table-body">
+                {% for producto in productos %}
+                <tr data-id="{{ producto.id_productos }}" data-cantidad="{{ producto.cantidad_producto }}"
+                class="{% if producto.cantidad_producto == 0 %} bg-danger {% elif producto.cantidad_producto < 6 %} bg-warning {% endif %}">
+                  <td>{{ producto.id_productos }}</td>
+                  <td>{{ producto.descripcion }}</td>
+                  <td>{{ producto.talle_prod }}</td>
+                  <td>{{ producto.genero_prod }}</td>
+                  <td>{{ producto.color_prod }}</td>
+                  <td>
+                    {% if producto.cantidad_producto == 0 %}
+                        <button class="btn-custom-red" title="No hay stock"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                    {% else %}
+                        <button class="btn-custom" onclick="agregarProducto({{ producto.id_productos }}, '{{ producto.descripcion }}', {{ producto.precio_unitario_venta }})">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="8" class="text-center">No hay productos disponibles.</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>          
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/b362b6ed8f.js" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('abrirBusqueda').addEventListener('click', function() {
+            document.getElementById('panelBusqueda').style.width = "600px";
+        });
+
+        document.getElementById('cerrarBusqueda').addEventListener('click', function() {
+            document.getElementById('panelBusqueda').style.width = "0";
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const products = Array.from(document.querySelectorAll("#stock-table-body tr"));
+      
+          function buscarProductos() {
+            const searchInput = document.getElementById("buscarProducto").value.toLowerCase();
+          
+            const filteredProducts = products.filter(product => {
+              const productDescription = product.querySelector("td").textContent.toLowerCase();
+              return productDescription.includes(searchInput);
+            });
+          
+            products.forEach(product => product.style.display = "none");
+            filteredProducts.forEach(product => product.style.display = "");
+          
+            const totalFilteredProducts = filteredProducts.length;
+            document.getElementById("product-info").textContent = `Mostrando ${totalFilteredProducts} productos.`;
+          }
+      
+          const searchBtn = document.getElementById("search-btn");
+          if (searchBtn) {
+              searchBtn.onclick = buscarProductos;
+          }
+          document.getElementById("buscarProducto").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              buscarProductos();
+            }
+          });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const products = Array.from(document.querySelectorAll("#stock-table-body tr"));
+    
+            function buscarProductos() {
+                const searchInput = document.getElementById("buscarProducto").value.toLowerCase();
+                const filteredProducts = products.filter(product => {
+                    const productDescription = product.querySelector("td").textContent.toLowerCase();
+                    return productDescription.includes(searchInput);
+                });
+    
+                products.forEach(product => product.style.display = "none");
+                filteredProducts.forEach(product => product.style.display = "");
+    
+                const totalFilteredProducts = filteredProducts.length;
+                document.getElementById("product-info").textContent = `Mostrando ${totalFilteredProducts} productos.`;
+            }
+    
+            document.getElementById("buscarProducto").addEventListener("input", buscarProductos);
+        });
+    
+        function agregarProducto(id, descripcion, precio) {
+            const filasExistentes = Array.from(document.querySelectorAll(".table-group-divider tr"));
+            const productoExistente = filasExistentes.find(row => row.dataset.id === id.toString());
+        
+            if (productoExistente) {
+                alert("Este producto ya ha sido agregado a la orden.");
+                return;
+            }
+        
+            const cantidadProductoDisponible = parseInt(document.querySelector(`tr[data-id="${id}"]`).dataset.cantidad);
+        
+            const nuevaFila = document.createElement("tr");
+            nuevaFila.dataset.id = id;
+        
+            nuevaFila.innerHTML = `
+                <td>${id}</td>
+                <td>${descripcion}</td>
+                <td>
+                    <input type="number" name="cantidad_${id}" value="1" min="1" 
+                        oninput="verificarCantidad(this, ${cantidadProductoDisponible}); 
+                                  actualizarSubtotalProducto(this, ${precio}); 
+                                  calcularSubtotal();" 
+                        data-precio="${precio}" 
+                        data-id="${id}" 
+                        id="cantidad-${id}">
+                </td>
+                <td class="precio"><i class="fa-solid fa-dollar-sign"></i>${precio.toFixed(2)}</td>
+                <td class="producto-subtotal"><i class="fa-solid fa-dollar-sign"></i>${precio.toFixed(2)}</td>
+                <td><button class="btn-custom-red" onclick="eliminarFila(this)"><i class="fa-solid fa-trash-can"></i></button></td>
+                <input type="hidden" name="id_prod" value="${id}">
+                <input type="hidden" name="cant_prod_vendido_${id}" value="1">
+                <input type="hidden" name="subtotal_${id}" value="${precio.toFixed(2)}">
+            `;
+        
+            const detalleOrden = document.querySelector(".table-group-divider");
+            detalleOrden.appendChild(nuevaFila);
+        
+            calcularSubtotal();
+        }
+        
+        function verificarCantidad(input, cantidadDisponible) {
+            const cantidadIngresada = parseInt(input.value);
+            const idProducto = input.dataset.id;
+        
+            if (cantidadIngresada > cantidadDisponible) {
+                alert(`Solo hay ${cantidadDisponible} unidades disponibles.`);
+                input.value = cantidadDisponible;
+        
+                actualizarCantidadVendida(idProducto, cantidadDisponible);
+            } else {
+                actualizarCantidadVendida(idProducto, cantidadIngresada);
+            }
+        }
+        
+        function actualizarCantidadVendida(id, cantidad) {
+            const inputCantidad = document.querySelector(`#cantidad-${id}`);
+            if (inputCantidad) {
+                inputCantidad.value = cantidad;
+            } else {
+                console.error(`No se encontró el input para el producto con ID ${id}`);
+            }
+        }
+    
+        function actualizarSubtotalProducto(input, precio) {
+            const cantidad = parseInt(input.value) || 0;
+            const subtotalProducto = cantidad * precio;
+            
+            const fila = input.closest("tr");
+            const celdaSubtotal = fila.querySelector(".producto-subtotal");
+            celdaSubtotal.innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${subtotalProducto.toFixed(2)}`;
+        }
+
+        function eliminarFila(button) {
+            const fila = button.closest("tr");
+            fila.remove();
+    
+            calcularSubtotal();
+        }
+    
+        function calcularSubtotal() {
+            let subtotal = 0;
+            const rows = document.querySelectorAll(".table-group-divider tr");
+    
+            rows.forEach(row => {
+                const precio = parseFloat(row.querySelector(".precio").textContent.replace(/[$]/g, '')) || 0;
+                const cantidad = parseInt(row.querySelector("input[type='number']").value) || 0;
+                subtotal += precio * cantidad;
+            });
+    
+            document.getElementById("subtotal").innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${subtotal.toFixed(2)}`;
+            calcularTotal(subtotal);
+        }
+    
+        function calcularTotal(subtotal) {
+            const descuentoInput = document.querySelector('.descuento input');
+            let descuento = 0;
+    
+            const selectedButton = document.querySelector('.descuento button.selected');
+            if (selectedButton) {
+                if (selectedButton.textContent.trim() === "Porcentaje") {
+                    const porcentaje = parseFloat(descuentoInput.value) || 0;
+                    descuento = (subtotal * porcentaje) / 100;
+                } else if (selectedButton.textContent.trim() === "Valor Fijo") {
+                    descuento = parseFloat(descuentoInput.value) || 0;
+                }
+            }
+    
+            let total = subtotal - descuento;
+            total = Math.max(total, 0);
+            document.getElementById("total").innerHTML = `<i class="fa-solid fa-dollar-sign"></i>${total.toFixed(2)}`;
+    
+            document.getElementById("total-field").value = total.toFixed(2);
+        }
+    
+        document.querySelectorAll('.descuento button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.descuento button').forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+    
+                const inputDescuento = document.querySelector('.descuento input');
+                inputDescuento.disabled = button.classList.contains('sin-descuento');
+                inputDescuento.value = '';
+                if (!button.classList.contains('sin-descuento')) inputDescuento.focus();
+    
+                calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
+            });
+        });
+    
+        document.querySelector('.descuento input').addEventListener('input', function() {
+            const selectedButton = document.querySelector('.descuento button.selected');
+            if (selectedButton && selectedButton.textContent.trim() === "Porcentaje") {
+                if (this.value > 100) this.value = 100;
+            }
+            calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
+        });
+    </script>
+    
+</body>
+</html>
