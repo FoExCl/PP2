@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'loginApp',
     "crispy_forms",
     "crispy_bootstrap5",
-    "APP_Compras",
     "InventarioApp",
     "CajaApp",
     "VentasApp",
+    "email_servicio",
 
 ]
 
@@ -145,3 +145,4 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

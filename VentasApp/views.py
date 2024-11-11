@@ -1,22 +1,4 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-from loginApp.models import Ventas, Productos
-
-def ventas_view(request):
-    ventas = Ventas.objects.all()
-    context = {
-        'ventas': ventas,
-    }
-    return render(request, 'ventas.html', context)
-
-def nueva_venta_view(request):
-    productos = Productos.objects.all().order_by('-id_productos')
-    context = {
-        'productos': productos
-    }
-    return render(request, 'nueva_venta.html', context)
-=======
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse
 from django.db import transaction
 from django.db.models import Max
@@ -126,19 +108,28 @@ def ventas_view(request):
     return render(request, 'ventas.html', context)
 
 
-def detalle_venta_view(request, id_det_venta):
-    detalle_venta = DetalleVentas.objects.get(id=id_det_venta) 
 
-    venta = detalle_venta.venta
-    factura = venta.factura  
-    producto = detalle_venta.producto  
+
+def detalle_venta_view(request, id_factura):
+    factura = get_object_or_404(Facturas, id_factura=id_factura)
+    venta = get_object_or_404(Ventas, id_factura=factura)
+
+    detalle_ventas = DetalleVentas.objects.filter(id_venta=venta)
+
+    subtotal = sum([detalle.subtotal for detalle in detalle_ventas])
+
+    descuento = venta.descuento
+    total_con_descuento = subtotal - (subtotal * (descuento / 100))
+
+    productos = Productos.objects.all()
 
     context = {
-        'detalle_venta': detalle_venta,
         'venta': venta,
         'factura': factura,
-        'producto': producto,
+        'detalle_ventas': detalle_ventas,
+        'subtotal': subtotal,
+        'total_con_descuento': total_con_descuento,
+        'productos': productos
     }
 
-    return render(request, 'ventas.html', context)
->>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
+    return render(request, 'detalle_venta.html', context)
