@@ -4,16 +4,8 @@ from django.db.models import Max
 
 def inventario_view(request):
     productos = Productos.objects.all().order_by('-id_productos')
-
-    tipos_productos = Productos.objects.values_list('tipo_prod', flat=True).distinct()
-    tipo_filtrado = request.GET.get('tipo_prod')
-    if tipo_filtrado:
-        productos = productos.filter(tipo_prod=tipo_filtrado)
-
     return render(request, 'inventario.html', {
         'productos': productos,
-        'tipos_productos': tipos_productos,
-        'tipo_filtrado': tipo_filtrado
     })
 
 def nuevo_producto_view(request):
