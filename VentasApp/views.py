@@ -65,7 +65,6 @@ def nueva_venta_view(request):
 
                     subtotal = float(producto.precio_unitario_venta) * cantidad
 
-                    # Actualizar el stock del producto
                     producto.cantidad_producto -= cantidad
                     producto.save()
 
