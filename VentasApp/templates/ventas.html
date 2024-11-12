@@ -53,9 +53,9 @@
                 <td>{{ venta.descuento }}</td>
                 <td>{{ venta.metodo_pago }}</td>
                 <td>
-                  <a href="{% url 'detalle_venta' venta.id_factura %}" class="btn btn-outline-dark btn-sm">
+                <a href="{% url 'detalle_venta' venta.detalleventas_set.first.id_venta.id_venta %}" class="btn btn-outline-dark btn-sm">
                     Ver Detalles <i class="bi bi-eye-fill" style="color: #000000;"></i>
-                  </a>
+                </a>
                 <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="{{ user.id }}">
                     Eliminar <i class="fa-solid fa-trash" style="color: #000000;"></i>
                 </button>

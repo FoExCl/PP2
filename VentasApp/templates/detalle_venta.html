@@ -5,93 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Venta</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'VentasApp/css/detalle_venta.css' %}">
 </head>
 <body>
     {% include 'navbar.html' %}
 
-    <div class="container mt-4">
-        <form method="post">
-            {% csrf_token %}
+    <div class="container">
+        <h1>Detalle de Venta</h1>
 
-            <div class="factura-datos">
-                <label for="numero-venta"><b>Nº Venta:</b></label>
-                <input type="text" id="numero-venta" value="{{ venta.id_venta }}" readonly>
+        <div class="factura-datos">
+            <label><b>Nº Venta:</b></label>
+            <span>{{ venta.id_venta }}</span>
 
-                <label for="numero-factura"><b>Nº Factura:</b></label>
-                <input type="text" id="numero-factura" value="{{ factura.id_factura }}" readonly>
+            <label><b>Nº Factura:</b></label>
+            <span>{{ venta.id_venta }}</span>
 
-                <label for="numero-caja"><b>Nº Caja:</b></label>
-                <input type="text" id="numero-caja" value="{{ venta.id_caja }}" readonly>
-            </div>
+            <label><b>Fecha:</b></label>
+            <span>{{ venta.fecha_venta }}</span>
+        </div>
 
-            <div class="container-box">
-                <h3>Detalle de la Orden</h3>
-                <div class="table-num1">
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>ID Producto</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            {% for detalle in detalle_ventas %}
-                            <tr>
-                                <td>{{ detalle.id_prod.id_productos }}</td>
-                                <td>{{ detalle.id_prod.descripcion }}</td>
-                                <td>{{ detalle.cant_prod_vendido }}</td>
-                                <td>${{ detalle.id_prod.precio_unitario_venta }}</td>
-                                <td>${{ detalle.subtotal }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="text-center">No hay productos en esta venta.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="subtotal-total">
-                    <strong>Subtotal:</strong> <span>${{ subtotal }}</span><br>
-                    <strong>Descuento:</strong> <span>{{ venta.descuento }}%</span><br>
-                    <strong>Total con descuento:</strong> <span>${{ total_con_descuento }}</span>
-                </div>
-            </div>
-            <div class="factura-datos">
-                <h3><i class="fa-regular fa-address-card"></i> Datos del Cliente</h3>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="nombre_cli" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre_cli" value="{{ venta.id_clientes.nombre_cli }}" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="apellido_cli" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido_cli" value="{{ venta.id_clientes.apellido_cli }}" readonly>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="dni" class="form-label">DNI</label>
-                        <input type="text" class="form-control" id="dni" value="{{ venta.id_clientes.dni }}" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" value="{{ venta.id_clientes.telefono }}" readonly>
-                    </div>
-                </div>
-            </div>
+        <div class="cliente-datos">
+          <h3>Datos del Cliente</h3>
+          <label><b>Nombre:</b></label>
+          <span>{{ clientes.id_clientes.nombre_cli }} {{ clientes.id_clientes.apellido_cli }}</span>
+        </div>
+      
+        <div class="container-box">
+          <div class="header d-flex flex-column align-items-center">
+              <h3>Detalle de Productos</h3>
+          </div>
+          <table class="table table-striped table-bordered">
+              <thead class="table-dark">
+                  <tr>
+                      <th>ID Producto</th>
+                      <th>Descripción</th>
+                      <th>Cantidad</th>
+                      <th>Precio Unitario</th>
+                      <th>Subtotal</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for detalle in productos %}
+                  <tr>
+                      <td>{{ detalle.id_prod.id_productos }}</td>
+                      <td>{{ detalle.id_prod.descripcion }}</td>
+                      <td>{{ detalle.cant_prod_vendido }}</td>
+                      <td>${{ detalle.id_prod.precio_unitario_venta }}</td>
+                      <td>${{ detalle.subtotal }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div>
+            <span>Subtotal: ${{ .subtotal }}</span>
+        </div>
 
-            <!-- Botones -->
-            <div class="options-box">
-                <a href="{% url 'ventas' %}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Volver</a>
-            </div>
-        </form>
+        <div>
+            <span>Descuento: ${{ clientes.descuento }}</span>
+        </div>
+
+        <div>
+            <span>Total: ${{ clientes.total }}</span>
+        </div>
+
+        <div>
+            <a href="{% url 'ventas' %}" class="btn btn-danger">Volver</a>
+        </div>
     </div>
 
 </body>
