@@ -50,6 +50,16 @@ body {
   flex-shrink: 0;
 }
 
+.dataTables_filter.d-flex {
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dataTables_filter select.form-control {
+  width: auto;
+  min-width: 150px;
+}
+
 .filter-container {
   display: flex;
   align-items: center;
