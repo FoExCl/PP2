@@ -14,7 +14,7 @@ from django.http import JsonResponse
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, 'home.html')
+        return render(request, 'user.html')
     else:
         return redirect('signin')
 
