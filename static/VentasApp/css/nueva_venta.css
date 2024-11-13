@@ -78,6 +78,17 @@ body {
     padding: 8px;
 }
 .table-num1 th:nth-child(1) {
+<<<<<<< HEAD
+    width: 60%;
+}
+.table-num1 th:nth-child(2) {
+    width: 12%;
+}
+.table-num1 th:nth-child(3) {
+    width: 16%;
+}
+.table-num1 th:nth-child(4) {
+=======
     width: 7%;
 }
 .table-num1 th:nth-child(2) {
@@ -93,6 +104,7 @@ body {
     width: 11%;
 }
 .table-num1 th:nth-child(6) {
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
     width: 7%;
 }
 .table-num1 input[type="number"] {
@@ -117,21 +129,33 @@ body {
     white-space: nowrap;
 }
 .table-num2 th:nth-child(1) {
+<<<<<<< HEAD
+    width: 52%;
+}
+.table-num2 th:nth-child(2),
+=======
     width: 7%;
 }
 .table-num2 th:nth-child(2) {
     width: 52%;
 }
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 .table-num2 th:nth-child(3) {
     width: 10%;
 }
 .table-num2 th:nth-child(4) {
+<<<<<<< HEAD
+    width: 14%;
+}
+.table-num2 th:nth-child(5) {
+=======
     width: 12%;
 }
 .table-num2 th:nth-child(5) {
     width: 12%;
 }
 .table-num2 th:nth-child(6) {
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
     width: 8%;
 }
 
@@ -199,7 +223,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+<<<<<<< HEAD
+=======
     margin-bottom: 15px;
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 }
 
 .linea-dos {
@@ -320,6 +347,8 @@ body {
 }
 .bg-warning {
   background-color: #f8de88 !important;
+<<<<<<< HEAD
+=======
 }
 
 .metodos-pago {
@@ -338,4 +367,5 @@ body {
 }
 #metodo-pago:hover {
     background-color: #f0f0f0;
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
 }

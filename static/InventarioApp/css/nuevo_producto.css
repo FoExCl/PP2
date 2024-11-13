@@ -6,9 +6,15 @@ body {
 
 .container-box {
     background-color: white;
+<<<<<<< HEAD
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+=======
     border: 3px solid #979595;
     padding: 20px;
     border-radius: 10px;
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     max-width: 600px;
@@ -18,7 +24,11 @@ body {
 
 .title-box {
   background-color: white;
+<<<<<<< HEAD
+  border: 1px solid #ccc;
+=======
   border: 2px solid #949090;
+>>>>>>> afe2c0df60800fffe0bbe8016e12ce4de7a1958a
   padding: 20px;
   border-radius: 8px;
   text-align: center;

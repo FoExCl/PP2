@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9">
   <title>Ventas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'ventasapp/css/ventas.css' %}">
 </head>
 <body>
@@ -39,6 +40,7 @@
               <th>Cliente</th>
               <th>Descuento</th>
               <th>Método de Pago</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="ventas-table-body">
@@ -50,6 +52,14 @@
                 <td>{{ venta.id_clientes.nombre_cli }} {{ venta.id_clientes.apellido_cli }}</td>
                 <td>{{ venta.descuento }}</td>
                 <td>{{ venta.metodo_pago }}</td>
+                <td>
+                <a href="{% url 'detalle_venta' venta.detalleventas_set.first.id_venta.id_venta %}" class="btn btn-outline-dark btn-sm">
+                    Ver Detalles <i class="bi bi-eye-fill" style="color: #000000;"></i>
+                </a>
+                <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="{{ user.id }}">
+                    Eliminar <i class="fa-solid fa-trash" style="color: #000000;"></i>
+                </button>
+                </td>
             </tr>
             {% endfor %}
           </tbody>

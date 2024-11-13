@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse
 from django.db import transaction
-from django.db.models import Max
+from django.db.models import Max, Sum
 from django.core.exceptions import ValidationError
 from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes, Cajas
 from django.utils import timezone
 from django.contrib import messages
+from decimal import Decimal
+
 
 
 def nueva_venta_view(request):
@@ -93,7 +95,6 @@ def nueva_venta_view(request):
     }
     return render(request, 'nueva_venta.html', context)
 
-
 def ventas_view(request):
     ventas = Facturas.objects.select_related('id_clientes').all()
     cajas = Cajas.objects.all()
@@ -108,18 +109,20 @@ def ventas_view(request):
     return render(request, 'ventas.html', context)
 
 
-def detalle_venta_view(request, id_det_venta):
-    detalle_venta = DetalleVentas.objects.get(id=id_det_venta) 
+def detalle_venta_view(request, id_venta):
+    # Recupera la venta
+    venta = get_object_or_404(Ventas, id_venta=id_venta)
+        
+    cliente = Facturas.objects.select_related('id_clientes').all() # Aquí accedes al cliente desde la factura
+    
+    # Recupera los detalles de la venta (productos vendidos)
+    productos = DetalleVentas.objects.filter(id_venta=venta)
 
-    venta = detalle_venta.venta
-    factura = venta.factura  
-    producto = detalle_venta.producto  
-
+    # Contexto para la plantilla
     context = {
-        'detalle_venta': detalle_venta,
         'venta': venta,
-        'factura': factura,
-        'producto': producto,
+        'clientes': cliente,
+        'productos': productos,
     }
-
-    return render(request, 'ventas.html', context)
+    
+    return render(request, 'detalle_venta.html', context)
