@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse
 from django.db import transaction
-from django.db.models import Max, F
+from django.db.models import Max, Sum
 from django.core.exceptions import ValidationError
 from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes, Cajas
 from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
+
 
 
 def nueva_venta_view(request):
@@ -55,21 +56,18 @@ def nueva_venta_view(request):
 
                 detalles_venta = []
                 for producto_data in request.POST.getlist('id_prod'):
-                    cantidad = int(request.POST.get(f'cant_prod_vendido_{producto_data}'))
+                    cantidad = request.POST.get(f'cant_prod_vendido_{producto_data}')
                     
                     if cantidad is None:
                         return JsonResponse({"success": False, "error": f"La cantidad para el producto {producto_data} no está disponible."})
                     
+                    cantidad = int(cantidad)
                     producto = Productos.objects.get(id_productos=producto_data)
-
-                    if producto.cantidad_producto < cantidad:
-                        return JsonResponse({"success": False, "error": f"No hay suficiente stock para el producto {producto.nombre}."})
 
                     subtotal = float(producto.precio_unitario_venta) * cantidad
 
-
-                    producto.cantidad_producto -= cantidad
-                    producto.save()
+                    if producto.cantidad_producto < cantidad:
+                        return JsonResponse({"success": False, "error": f"No hay suficiente stock para el producto {producto.nombre}."})
 
                     detalle = DetalleVentas(
                         id_venta=nueva_venta,
@@ -112,14 +110,15 @@ def ventas_view(request):
 
 
 def detalle_venta_view(request, id_venta):
-
+    # Recupera la venta
     venta = get_object_or_404(Ventas, id_venta=id_venta)
         
-    cliente = Facturas.objects.select_related('id_clientes').all()
+    cliente = Facturas.objects.select_related('id_clientes').all() # Aquí accedes al cliente desde la factura
     
+    # Recupera los detalles de la venta (productos vendidos)
     productos = DetalleVentas.objects.filter(id_venta=venta)
 
-
+    # Contexto para la plantilla
     context = {
         'venta': venta,
         'clientes': cliente,
