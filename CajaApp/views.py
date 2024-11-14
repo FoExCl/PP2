@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from loginApp.models import Cajas, Empleados, Ventas
-from django.db.models import Max
+from loginApp.models import Cajas, Empleados, Ventas, DetalleVentas
+from django.db.models import Max,  Prefetch
 from django.utils import timezone
+from django.http import JsonResponse
 from django.contrib import messages
 
 def caja_view(request):
@@ -41,7 +42,49 @@ def cerrar_caja_view(request, caja_id):
         caja.save()
 
         return redirect('caja')
+    
+def get_ventas_data(request):
+    caja_id = request.GET.get('caja_id')
+    caja = get_object_or_404(Cajas, id_caja=caja_id)
+    fecha_cierre = caja.fechacierrecaja if caja.estado_caja == 'Cerrada' else timezone.now()
+    
+    ventas_data = (
+        Ventas.objects
+        .select_related('id_caja')
+        .prefetch_related(
+            Prefetch(
+                'detalleventas_set',
+                queryset=DetalleVentas.objects.select_related('id_factura__id_clientes')
+            )
+        )
+        .filter(
+            fecha_venta__gte=caja.fechaaperturacaja,
+            fecha_venta__lte=fecha_cierre
+        )
+        .values(
+            'id_venta',
+            'fecha_venta',
+            'detalleventas__id_factura__total',
+            'detalleventas__id_factura__id_clientes__nombre_cli',
+            'detalleventas__id_factura__id_clientes__apellido_cli',
+            'detalleventas__id_factura__descuento',
+            'detalleventas__id_factura__metodo_pago'
+        )
+        .distinct()
+    )
 
+    data = []
+    for venta in ventas_data:
+        data.append({
+            'id_venta': venta['id_venta'],
+            'fecha_venta': venta['fecha_venta'].strftime('%Y-%m-%d %H:%M:%S'),
+            'total': float(venta['detalleventas__id_factura__total']) if venta['detalleventas__id_factura__total'] else 0,
+            'cliente': f"{venta['detalleventas__id_factura__id_clientes__nombre_cli']} {venta['detalleventas__id_factura__id_clientes__apellido_cli']}".strip(),
+            'descuento': float(venta['detalleventas__id_factura__descuento']) if venta['detalleventas__id_factura__descuento'] else 0,
+            'metodo_pago': venta['detalleventas__id_factura__metodo_pago']
+        })
+
+    return JsonResponse({'data': data})
 
 def apertura_view(request):
     caja_abierta = Cajas.objects.filter(estado_caja="Abierta").exists()
@@ -78,3 +121,5 @@ def apertura_view(request):
         'empleados': empleados, 
         'current_time': current_time
     })
+    
+    

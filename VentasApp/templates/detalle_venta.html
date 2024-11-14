@@ -1,77 +1,77 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle Venta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <title>Detalles de la Venta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
 </head>
 <body>
-        {% include 'navbar.html' %}
-      
-        <div class="container mt-3">
-          <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">
-                  <h1>Detalle Venta</h1>
-                </div>
-                <div class="card-body">
-                  <table class="table table-striped">
-                    <tbody>
-                      <tr>
-                        <th scope="row">Producto</th>
-                        <td>{{ producto.descripcion }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Precio Unitario</th>
-                        <td>${{ producto.precio_unitario_venta }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Cantidad Vendida</th>
-                        <td>{{ detalle_venta.cant_prod_vendido }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Subtotal</th>
-                        <td>${{ detalle_venta.subtotal }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Fecha Venta</th>
-                        <td>{{ ventas.fecha_venta|date:"d/m/Y" }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Descripción Venta</th>
-                        <td>{{ ventas.descripcion_venta_realizada }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Factura N°</th>
-                        <td>{{ factura.id_factura }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Total</th>
-                        <td>${{ factura.total }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Descuento</th>
-                        <td>${{ factura.descuento }}</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Método Pago</th>
-                        <td>{{ factura.metodo_pago }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+    <div class="container mt-4">
+        <h1>Detalles de la Venta</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Información de la Venta</h3>
+                <p><strong>ID Venta:</strong> {{ venta.id_venta }}</p>
+                <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</p>
+                <p><strong>Descripción de la Venta:</strong> {{ venta.descripcion_venta_realizada }}</p>
             </div>
-          </div>
         </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
-  
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Detalles del Cliente</h3>
+                <p><strong>Cliente:</strong> {{ cliente.id_clientes.nombre }}</p>
+                <p><strong>Dirección:</strong> {{ cliente.id_clientes.direccion }}</p>
+                <p><strong>Email:</strong> {{ cliente.id_clientes.email }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Detalles de la Factura</h3>
+                <p><strong>Total Factura:</strong> ${{ detalles_venta.0.total_factura }}</p>
+                <p><strong>Descuento:</strong> ${{ detalles_venta.0.descuento_factura }}</p>
+                <p><strong>Método de Pago:</strong> {{ detalles_venta.0.metodo_pago }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Productos Vendidos</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID Producto</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.id_prod.id_productos }}</td>
+                                <td>{{ producto.id_prod.descripcion }}</td>
+                                <td>{{ producto.cant_prod_vendido }}</td>
+                                <td>${{ producto.subtotal }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Caja Asociada</h3>
+                <p><strong>ID Caja:</strong> {{ caja.first.id_caja }}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>
