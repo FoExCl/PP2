@@ -7,6 +7,7 @@ from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes
 from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
+from django.db import connection
 
 
 
@@ -109,20 +110,60 @@ def ventas_view(request):
     return render(request, 'ventas.html', context)
 
 
+
 def detalle_venta_view(request, id_venta):
+    
+    with connection.cursor() as cursor:
+        cursor.callproc('VerVenta', [id_venta])
+        result = cursor.fetchall()
+    
+    detalles_venta = []
+    for row in result:
+        detalles_venta.append({
+           "id_venta": row[0],
+           "fecha_venta": row[1],
+           "total_factura": (row[2] - row[3]),
+           "descuento_factura": row[3],
+           "metodo_pago": row[4],
+           "id_clientes": row[5],
+        })
+        
+    venta= get_object_or_404(Ventas, id_venta=id_venta)
+  
+    cliente= Facturas.objects.select_related("id_clientes").filter(id_factura=venta.id_venta).first()
+
+    caja= Cajas.objects.all()
+
+    productos= DetalleVentas.objects.filter(id_venta=venta)
+
+    context= {
+        "detalles_venta": detalles_venta,
+        "venta": venta,
+        "caja": caja,
+        "cliente": cliente,
+        "productos": productos,
+    }    
+    return render(request, 'detalle_venta.html', context)
+
+
+
+"""def detalle_venta_view(request, id_venta):
     # Recupera la venta
     venta = get_object_or_404(Ventas, id_venta=id_venta)
         
     cliente = Facturas.objects.select_related('id_clientes').all() # Aquí accedes al cliente desde la factura
     
+    caja = Cajas.objects.all()
     # Recupera los detalles de la venta (productos vendidos)
     productos = DetalleVentas.objects.filter(id_venta=venta)
 
     # Contexto para la plantilla
     context = {
         'venta': venta,
-        'clientes': cliente,
+        "caja": caja,
+        'cliente': cliente,
         'productos': productos,
     }
     
     return render(request, 'detalle_venta.html', context)
+"""

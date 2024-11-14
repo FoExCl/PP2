@@ -269,5 +269,5 @@ class Ventas(models.Model):
     descripcion_venta_realizada = models.CharField(max_length=254, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = False  
         db_table = 'ventas'

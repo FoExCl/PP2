@@ -1,79 +1,75 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Venta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'VentasApp/css/detalle_venta.css' %}">
+    <title>Detalles de la Venta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
 </head>
 <body>
-    {% include 'navbar.html' %}
+    <div class="container mt-4">
+        <h1>Detalles de la Venta</h1>
 
-    <div class="container">
-        <h1>Detalle de Venta</h1>
-
-        <div class="factura-datos">
-            <label><b>Nº Venta:</b></label>
-            <span>{{ venta.id_venta }}</span>
-
-            <label><b>Nº Factura:</b></label>
-            <span>{{ venta.id_venta }}</span>
-
-            <label><b>Fecha:</b></label>
-            <span>{{ venta.fecha_venta }}</span>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Información de la Venta</h3>
+                <p><strong>ID Venta:</strong> {{ venta.id_venta }}</p>
+                <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</p>
+                <p><strong>Descripción de la Venta:</strong> {{ venta.descripcion_venta_realizada }}</p>
+            </div>
         </div>
 
-        <div class="cliente-datos">
-          <h3>Datos del Cliente</h3>
-          <label><b>Nombre:</b></label>
-          <span>{{ clientes.id_clientes.nombre_cli }} {{ clientes.id_clientes.apellido_cli }}</span>
-        </div>
-      
-        <div class="container-box">
-          <div class="header d-flex flex-column align-items-center">
-              <h3>Detalle de Productos</h3>
-          </div>
-          <table class="table table-striped table-bordered">
-              <thead class="table-dark">
-                  <tr>
-                      <th>ID Producto</th>
-                      <th>Descripción</th>
-                      <th>Cantidad</th>
-                      <th>Precio Unitario</th>
-                      <th>Subtotal</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for detalle in productos %}
-                  <tr>
-                      <td>{{ detalle.id_prod.id_productos }}</td>
-                      <td>{{ detalle.id_prod.descripcion }}</td>
-                      <td>{{ detalle.cant_prod_vendido }}</td>
-                      <td>${{ detalle.id_prod.precio_unitario_venta }}</td>
-                      <td>${{ detalle.subtotal }}</td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-        </div>
-        <div>
-            <span>Subtotal: ${{ .subtotal }}</span>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Cliente</h3>
+                <p><strong>Cliente:</strong> {{ cliente.id_clientes.nombre }}</p>
+            </div>
         </div>
 
-        <div>
-            <span>Descuento: ${{ clientes.descuento }}</span>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Detalles de la Factura</h3>
+                <p><strong>Total Factura:</strong> ${{ detalles_venta.0.total_factura }}</p>
+                <p><strong>Descuento:</strong> ${{ detalles_venta.0.descuento_factura }}</p>
+                <p><strong>Método de Pago:</strong> {{ detalles_venta.0.metodo_pago }}</p>
+            </div>
         </div>
 
-        <div>
-            <span>Total: ${{ clientes.total }}</span>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Productos Vendidos</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID Producto</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.id_prod.id_productos }}</td>
+                                <td>{{ producto.id_prod.descripcion }}</td>
+                                <td>{{ producto.cant_prod_vendido }}</td>
+                                <td>${{ producto.subtotal }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div>
-            <a href="{% url 'ventas' %}" class="btn btn-danger">Volver</a>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title">Caja Asociada</h3>
+                <p><strong>ID Caja:</strong> {{ caja.first.id_caja }}</p>
+            </div>
         </div>
+
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
