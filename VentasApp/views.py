@@ -7,6 +7,7 @@ from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes
 from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
+from django.db import connection
 
 
 
