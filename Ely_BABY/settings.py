@@ -95,7 +95,7 @@ DATABASES = {
         'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
         'PORT': '3306'
     }"""
-    "deafult": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    "default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
 }
 
 
