@@ -2,7 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+loginApp/__pycache__/models.cpython-311.pyc
+loginApp/__pycache__/views.cpython-311.pyc
 # C extensions
 *.so
 
