@@ -24,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y+vy50*evcx!4$fxgs#%zq*271ehwkqsg+4*&v%3k@=_vbyx$g'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production!7
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "app_3c083f94-d650-4192-b569-c77573a0b109").split(",")
+PORT= int(os.getenv("PORT", 8000))
+HOST= os.getenv("HOST", "0.0.0.0")
+ALLOWED_HOSTS = ["*",".cleverapps.io", "app_3c083f94-d650-4192-b569-c77573a0b109"]
+CSRF_TRUSTED_ORIGINS=["https://*.cleverapps.io","https://app_3c083f94-d650-4192-b569-c77573a0b109.cleverapps.io"]
 
 
 # Application definition
@@ -97,8 +100,8 @@ DATABASES = {
     #    'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
     #    'PORT': '3306'
     #}
-    #"default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
-    'default': dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    "default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    
 
 
 }
