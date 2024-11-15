@@ -1,0 +1,1 @@
+web: python manage.py collectstatic --noinput && gunicorn Ely_BABY.wsgi:application --bind $HOST:$PORT 
