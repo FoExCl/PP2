@@ -89,15 +89,18 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    """'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bjvhcp3oyzg8gz8rofmk',
-        'USER': 'ujnhca2f8jmcyl9u',
-        'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
-        'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
-        'PORT': '3306'
-    }"""
-    "default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'NAME': 'bjvhcp3oyzg8gz8rofmk',
+    #    'USER': 'ujnhca2f8jmcyl9u',
+    #    'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
+    #    'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
+    #    'PORT': '3306'
+    #}
+    #"default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    'default': dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+
+
 }
 
 
