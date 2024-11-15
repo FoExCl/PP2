@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os,inspect, dj_database_url 
+import os
+import inspect
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-y+vy50*evcx!4$fxgs#%zq*271ehwkqsg+4*&v%3k@=_vbyx$g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_JOSTS", "app_3c083f94-d650-4192-b569-c77573a0b109").split(",")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "app_3c083f94-d650-4192-b569-c77573a0b109").split(",")
 
 
 # Application definition
