@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'elybaby',
-        'USER': 'root',
-        'PASSWORD': '4371',
-        'HOST': '127.0.0.1',
+        'NAME': 'bjvhcp3oyzg8gz8rofmk',
+        'USER': 'ujnhca2f8jmcyl9u',
+        'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
+        'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
         'PORT': '3306'
     }
 }
@@ -120,9 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Buenos_Aires'
 
 USE_I18N = True
 
