@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from django.db import transaction
-from django.db.models import Max, Sum
+from django.db import transaction, connection
+from django.db.models import Max, F, Prefetch
 from django.core.exceptions import ValidationError
 from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes, Cajas
 from django.utils import timezone
@@ -67,8 +67,8 @@ def nueva_venta_view(request):
 
                     subtotal = float(producto.precio_unitario_venta) * cantidad
 
-                    if producto.cantidad_producto < cantidad:
-                        return JsonResponse({"success": False, "error": f"No hay suficiente stock para el producto {producto.nombre}."})
+                    producto.cantidad_producto -= cantidad
+                    producto.save()
 
                     detalle = DetalleVentas(
                         id_venta=nueva_venta,
@@ -97,33 +97,83 @@ def nueva_venta_view(request):
     return render(request, 'nueva_venta.html', context)
 
 def ventas_view(request):
-    ventas = Facturas.objects.select_related('id_clientes').all()
-    cajas = Cajas.objects.all()
-
-    estado_caja_abierta = cajas.filter(estado_caja="Abierta").exists()
+    estado_caja_abierta = True
     
-    context = {
-        'ventas': ventas,
-        'cajas': cajas,
-        'estado_caja_abierta': estado_caja_abierta,
-    }
-    return render(request, 'ventas.html', context)
+    return render(request, 'ventas.html', {
+        'estado_caja_abierta': estado_caja_abierta
+    })
+
+def get_ventas_data(request):
+    ventas_data = (
+        Ventas.objects
+        .select_related('id_caja')
+        .prefetch_related(
+            Prefetch(
+                'detalleventas_set',
+                queryset=DetalleVentas.objects.select_related('id_factura__id_clientes')
+            )
+        )
+        .values(
+            'id_venta',
+            'fecha_venta',
+            'detalleventas__id_factura__total',
+            'detalleventas__id_factura__id_clientes__nombre_cli',
+            'detalleventas__id_factura__id_clientes__apellido_cli',
+            'detalleventas__id_factura__descuento',
+            'detalleventas__id_factura__metodo_pago'
+        )
+        .distinct()
+    )
+
+    data = []
+    for venta in ventas_data:
+        data.append({
+            'id_venta': venta['id_venta'],
+            'fecha_venta': venta['fecha_venta'].strftime('%Y-%m-%d %H:%M:%S'),
+            'total': float(venta['detalleventas__id_factura__total']) if venta['detalleventas__id_factura__total'] else 0,
+            'cliente': f"{venta['detalleventas__id_factura__id_clientes__nombre_cli']} {venta['detalleventas__id_factura__id_clientes__apellido_cli']}".strip(),
+            'descuento': float(venta['detalleventas__id_factura__descuento']) if venta['detalleventas__id_factura__descuento'] else 0,
+            'metodo_pago': venta['detalleventas__id_factura__metodo_pago']
+        })
+
+    return JsonResponse({'data': data})
 
 
 def detalle_venta_view(request, id_venta):
-    # Recupera la venta
-    venta = get_object_or_404(Ventas, id_venta=id_venta)
-        
-    cliente = Facturas.objects.select_related('id_clientes').all() # Aquí accedes al cliente desde la factura
     
-    # Recupera los detalles de la venta (productos vendidos)
-    productos = DetalleVentas.objects.filter(id_venta=venta)
+    with connection.cursor() as cursor:
+        cursor.callproc('VerVenta', [id_venta])
+        result = cursor.fetchall()
+    
+    
+    detalles_venta = []
+    for row in result:
+        detalles_venta.append({
+           "id_venta": row[0],
+           "fecha_venta": row[1],
+           "total_factura": row[2],
+           "descuento_factura": row[3],
+           "metodo_pago": row[4],
+           "id_clientes": row[5],
+        })
+    
+    venta= get_object_or_404(Ventas, id_venta=id_venta)
+  
+    cliente= Facturas.objects.select_related("id_clientes").filter(id_factura=venta.id_venta).first()
 
-    # Contexto para la plantilla
-    context = {
-        'venta': venta,
-        'clientes': cliente,
-        'productos': productos,
+ 
+    caja= Cajas.objects.all()
+
+
+    productos= DetalleVentas.objects.filter(id_venta=venta)
+
+
+    context= {
+        "detalles_venta": detalles_venta,
+        "venta": venta,
+        "caja": caja,
+        "cliente": cliente,
+        "productos": productos,
     }
     
-    return render(request, 'detalle_venta.html', context)
+    return render(request, 'detalle_venta.html', {'id_venta': id_venta})
