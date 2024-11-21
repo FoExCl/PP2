@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os,inspect
+import os
+import inspect
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y+vy50*evcx!4$fxgs#%zq*271ehwkqsg+4*&v%3k@=_vbyx$g'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!7
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+PORT= int(os.getenv("PORT", 8000))
+HOST= os.getenv("HOST", "0.0.0.0")
+ALLOWED_HOSTS = ["*",".cleverapps.io", "app_3c083f94-d650-4192-b569-c77573a0b109"]
+CSRF_TRUSTED_ORIGINS=["https://*.cleverapps.io","https://app_3c083f94-d650-4192-b569-c77573a0b109.cleverapps.io"]
 
 
 # Application definition
@@ -88,14 +93,18 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bjvhcp3oyzg8gz8rofmk',
-        'USER': 'ujnhca2f8jmcyl9u',
-        'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
-        'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
-        'PORT': '3306'
-    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'NAME': 'bjvhcp3oyzg8gz8rofmk',
+    #    'USER': 'ujnhca2f8jmcyl9u',
+    #    'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
+    #    'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
+    #    'PORT': '3306'
+    #}
+    "default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
+    
+
+
 }
 
 

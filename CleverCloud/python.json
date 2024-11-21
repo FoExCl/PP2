@@ -1,0 +1,8 @@
+{
+    "build": {
+      "python_version": "3.9"  
+    },
+    "deploy": {
+      "module": "Estimulo_KyF.wsgi:application"
+    }
+}

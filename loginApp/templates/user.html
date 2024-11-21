@@ -4,45 +4,104 @@
 {% block content %}
 {% include 'navbar.html' %}
 
-<div class="content container-fluid my-4">
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-10 col-sm-12">
-                    <h3 class="text-center"><i class="fas fa-user me-2"></i>Perfil del Usuario</h3>
-                    <br>
-                    <div class="card card-body">
-                        <h4 class="text-center">Detalles de Usuario</h4>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <strong>Nombre:</strong>
-                                <p>{{ user.first_name }}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <strong>Apellido:</strong>
-                                <p>{{ user.last_name }}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <strong>Email:</strong>
-                                <p>{{ user.email }}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <strong>Nombre de Usuario:</strong>
-                                <p>{{ user.username }}</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="{{ user.id }}">
-                                Editar perfil
-                            </button>
-                        </div>
-                    </div>
-                </div>
+<style>
+    body {
+        padding: 10px;
+        background-color: #A0B0AF;
+    }
+
+    .container-box {
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .title-box {
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .profile-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .profile-info-item {
+        margin-bottom: 15px;
+    }
+
+    .profile-info-item strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .title-box, .container-box {
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="container d-flex flex-column align-items-center">
+    <div class="title-box">
+        <h1><i class="fas fa-user me-2"></i>Perfil del Usuario</h1>
+    </div>
+    <div class="container-box">
+        <div class="profile-info">
+            <div class="profile-info-item">
+                <strong>DNI:</strong>
+                <p>{{ empleado.dni }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Nombre:</strong>
+                <p>{{ empleado.nombre }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Apellido:</strong>
+                <p>{{ empleado.apellido }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Edad:</strong>
+                <p>{{ empleado.edad }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Teléfono:</strong>
+                <p>{{ empleado.telefono }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Correo:</strong>
+                <p>{{ empleado.correo }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Dirección:</strong>
+                <p>{{ empleado.direccion }}</p>
+            </div>
+            <div class="profile-info-item">
+                <strong>Nombre de Usuario:</strong>
+                <p>{{ empleado.id_user.username }}</p>
             </div>
         </div>
-    </section>
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="{{ empleado.id_user.id }}">
+                Editar perfil
+            </button>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
