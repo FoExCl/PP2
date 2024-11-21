@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect,get_object_or_404
+from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
 from django.db import transaction
-from django.db.models import Max, Sum
+from django.db.models import Max, Sum, Count
 from django.core.exceptions import ValidationError
 from loginApp.models import Ventas, Productos, Facturas, DetalleVentas, Clientes, Cajas
 from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
+from django.utils.translation import activate
 from django.db import connection
 
 
@@ -145,6 +147,29 @@ def detalle_venta_view(request, id_venta):
     }    
     return render(request, 'detalle_venta.html', context)
 
+
+def ChartData(request):
+
+    ventas_por_mes = (
+        Ventas.objects.annotate(mes=TruncMonth('fecha_venta'))
+        .values('mes')
+        .annotate(cantidad=Count('id_venta'))
+        .order_by('mes')
+    )
+    etiquetas = [venta["mes"].strftime("%B") for venta in ventas_por_mes]
+    datos = [venta["cantidad"] for venta in ventas_por_mes]
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({
+            "labels": etiquetas,
+            "data": datos,
+        })
+    context = {
+        "labels": etiquetas,
+        "data": datos,
+        "chartLabel": "Ventas realizadas por Mes",
+    }
+    return render(request, 'grafico.html', context)
 
 
 """def detalle_venta_view(request, id_venta):
