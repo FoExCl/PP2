@@ -1,19 +1,23 @@
 from django import forms
 from .models import Empleados, AuthUser, AuthGroup, AuthUserGroups
-from django.contrib.auth.hashers import make_password  
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError  
+from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 class EmpleadoCreationForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, label="Nombre de usuario")
     password1 = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
     password2 = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirmar contraseña")
-    group_name = 'Empleado'
+    dni = forms.CharField(max_length=20, required=True, label="DNI")
+    rol = forms.ChoiceField(
+        choices=[('vendedor', 'Vendedor'), ('administrador', 'Administrador')],
+        required=True,
+        label="Rol"
+    )
 
     class Meta:
         model = Empleados
-        fields = ['nombre', 'apellido', 'edad', 'telefono', 'correo', 'direccion']
+        fields = ['dni', 'nombre', 'apellido', 'edad', 'telefono', 'correo', 'direccion']
 
     def clean_correo(self):
         correo = self.cleaned_data['correo']
@@ -27,6 +31,12 @@ class EmpleadoCreationForm(forms.ModelForm):
             raise ValidationError('Este nombre de usuario ya está registrado.')
         return username
 
+    def clean_dni(self):
+        dni = self.cleaned_data['dni']
+        if Empleados.objects.filter(dni=dni).exists():
+            raise ValidationError('Este DNI ya está registrado.')
+        return dni
+
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
@@ -37,19 +47,21 @@ class EmpleadoCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         username = self.cleaned_data['username']
-        password = make_password(self.cleaned_data['password1'])  
+        password = make_password(self.cleaned_data['password1'])
         correo = self.cleaned_data['correo']
         first_name = self.cleaned_data['nombre']
         last_name = self.cleaned_data['apellido']
+        dni = self.cleaned_data['dni']
+        rol = self.cleaned_data['rol']
 
         user = AuthUser(
             username=username,
             email=correo,
             first_name=first_name,
             last_name=last_name,
-            is_active=1,
-            is_staff=0,
-            is_superuser=0,
+            is_active=True,
+            is_staff=rol == 'administrador',
+            is_superuser=rol == 'administrador',
             password=password,
             date_joined=timezone.now()
         )
@@ -57,21 +69,29 @@ class EmpleadoCreationForm(forms.ModelForm):
 
         empleado = super().save(commit=False)
         empleado.id_user = user
+        empleado.dni = dni
 
         if commit:
             empleado.save()
 
-        grupo_empleado, created = AuthGroup.objects.get_or_create(name=self.group_name)
-        AuthUserGroups.objects.create(user=user, group=grupo_empleado)
+        grupo, created = AuthGroup.objects.get_or_create(name=rol)
+        AuthUserGroups.objects.create(user=user, group=grupo)
 
         return empleado
-    
 
 class EditarEmpleadoForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, label="Nombre de usuario")
+    dni = forms.CharField(max_length=20, required=True, label="DNI")
+    rol = forms.ChoiceField(
+        choices=[('vendedor', 'Vendedor'), ('administrador', 'Administrador')],
+        required=True,
+        label="Rol"
+    )
+    is_active = forms.BooleanField(required=False, label="Activo")
+
     class Meta:
         model = Empleados
-        fields = ['nombre', 'apellido', 'edad', 'telefono', 'correo', 'direccion']
+        fields = ['dni', 'nombre', 'apellido', 'edad', 'telefono', 'correo', 'direccion']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -80,12 +100,24 @@ class EditarEmpleadoForm(forms.ModelForm):
             self.fields['nombre'].initial = self.instance.id_user.first_name
             self.fields['apellido'].initial = self.instance.id_user.last_name
             self.fields['correo'].initial = self.instance.id_user.email
+            self.fields['dni'].initial = self.instance.dni
+            self.fields['is_active'].initial = self.instance.id_user.is_active
+            user_group = AuthUserGroups.objects.filter(user=self.instance.id_user).first()
+            if user_group:
+                self.fields['rol'].initial = user_group.group.name
 
     def clean_correo(self):
         correo = self.cleaned_data['correo']
         if AuthUser.objects.filter(email=correo).exclude(id=self.instance.id_user.id).exists():
             raise forms.ValidationError('Este correo electrónico ya está registrado por otro usuario.')
         return correo
+
+    def clean_dni(self):
+        dni = self.cleaned_data['dni']
+        if Empleados.objects.filter(dni=dni).exclude(dni=self.instance.dni).exists():
+            raise forms.ValidationError('Este DNI ya está registrado por otro usuario.')
+        return dni
+    # ... (keep other methods unchanged)
 
     def save(self, commit=True):
         empleado = super().save(commit=False)
@@ -95,9 +127,23 @@ class EditarEmpleadoForm(forms.ModelForm):
         user.first_name = self.cleaned_data['nombre']
         user.last_name = self.cleaned_data['apellido']
         user.email = self.cleaned_data['correo']
+        user.is_active = self.cleaned_data['is_active']
+        user.is_staff = self.cleaned_data['rol'] == 'administrador'
+        user.is_superuser = False
+
+        empleado.dni = self.cleaned_data['dni']
 
         if commit:
             user.save()
             empleado.save()
+
+            # Update user group
+            new_rol = self.cleaned_data['rol']
+            current_user_group = AuthUserGroups.objects.filter(user=user).first()
+            if current_user_group:
+                current_user_group.delete()
+            
+            new_group, _ = AuthGroup.objects.get_or_create(name=new_rol)
+            AuthUserGroups.objects.create(user=user, group=new_group)
 
         return empleado

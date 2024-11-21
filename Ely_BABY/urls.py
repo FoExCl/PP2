@@ -20,7 +20,6 @@ from loginApp import views
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
-admin.site.login = login_required(user_passes_test(lambda u: u.is_superuser)(admin.site.login))
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -30,8 +29,8 @@ urlpatterns = [
     path('users/', views.user_list, name='userlist'),
     path('users/add/', views.add_user, name='add_user'),
     path('users/edit/<int:user_id>/', views.edit_user, name='edit_user'),
-    path('users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
-    
+    path('users/toggle-active/<int:user_id>/', views.toggle_user_active, name='toggle_user_active'),
+
     path('user/', views.user_profile, name='user'),
     
     path('logout/', views.exit, name='exit'),

@@ -46,9 +46,23 @@
         padding: 8px;
     }
     .col-edad {
-        width: 60px; 
+        width: 60px;
+    }
+    .col-acciones{
+        width: 100px;
+    }
+    .col-estado{
+        width: 100px;
+    }
+    .inactive-user {
+    color: #999; 
+    background-color: transparent; 
     }
 
+    .inactive-user {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
 
     @media (max-width: 768px) {
         .search-container, #search-input, .filter-container {
@@ -72,7 +86,6 @@
         <h1>Lista de Usuarios</h1>
     </div>
     <div class="container-box">
-        
         <div class="table-product">
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">
@@ -84,12 +97,13 @@
                         <th>Teléfono</th>
                         <th>Correo</th>
                         <th>Dirección</th>
-                        <th>Acciones</th>
+                        <th class="col-estado">Estado</th>
+                        <th class="col-acciones">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for empleado in empleados %}
-                    <tr>
+                    <tr class="{% if not empleado.id_user.is_active %}inactive-user{% endif %}">
                         <td>{{ empleado.dni }}</td>
                         <td>{{ empleado.nombre }}</td>
                         <td>{{ empleado.apellido }}</td>
@@ -97,58 +111,46 @@
                         <td>{{ empleado.telefono }}</td>
                         <td>{{ empleado.correo }}</td>
                         <td>{{ empleado.direccion }}</td>
+                        <td>{% if empleado.id_user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
                         <td>
-                            <a class="btn btn-success btn-sm edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="{{ empleado.id_user.id }}">
+                            <button class="btn btn-success btn-sm edit-user" data-user-id="{{ empleado.id_user.id }}">
                                 <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <a href="{% url 'delete_user' empleado.id_user.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario permanentemente?');">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                            <!-- <button type="button" class="btn btn-outline-dark btn-sm edit-user" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="{{ empleado.id_user.id }}">
-                                Editar
                             </button>
-                            <a href="{% url 'delete_user' empleado.id_user.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario permanentemente?');">
-                                Eliminar
-                            </a> -->
+                            <button class="btn btn-warning btn-sm toggle-active" data-user-id="{{ empleado.id_user.id }}" data-is-active="{{ empleado.id_user.is_active|yesno:'true,false' }}">
+                                {% if empleado.id_user.is_active %}
+                                    <i class="fa-solid fa-user-slash"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-user-check"></i>
+                                {% endif %}
+                            </button>
                         </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">No hay usuarios registrados.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <button type="button" class="btn btn-secondary mb-3" id="addUserBtn">
                 Agregar Usuario
             </button>
         </div>
     </div>
 </div>
 
-
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+<!-- User Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Agregar Nuevo Usuario</h5>
+                <h5 class="modal-title" id="userModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                
+                <!-- The user form will be loaded here -->
             </div>
         </div>
     </div>
@@ -156,28 +158,136 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const addUserModal = document.getElementById('addUserModal');
-        const editUserModal = document.getElementById('editUserModal');
-
-        addUserModal.addEventListener('show.bs.modal', function (event) {
-            fetch("{% url 'add_user' %}")
-                .then(response => response.text())
-                .then(html => {
-                    addUserModal.querySelector('.modal-body').innerHTML = html;
-                });
+        const userModal = new bootstrap.Modal(document.getElementById('userModal'));
+        const modalBody = document.querySelector('#userModal .modal-body');
+        const modalTitle = document.getElementById('userModalLabel');
+    
+        // Limpiar el modal antes de cerrarlo
+        document.getElementById('userModal').addEventListener('hidden.bs.modal', function () {
+            modalBody.innerHTML = '';
+            modalTitle.textContent = '';
         });
-
+    
+        document.getElementById('addUserBtn').addEventListener('click', function() {
+            openUserModal("Agregar Usuario", "{% url 'add_user' %}");
+        });
+    
         document.querySelectorAll('.edit-user').forEach(button => {
-            button.addEventListener('click', function(event) {
+            button.addEventListener('click', function() {
                 const userId = this.getAttribute('data-user-id');
-                fetch(`/users/edit/${userId}/`)
-                    .then(response => response.text())
-                    .then(html => {
-                        editUserModal.querySelector('.modal-body').innerHTML = html;
-                    });
+                openUserModal("Editar Usuario", `/users/edit/${userId}/`);
             });
         });
+        
+        document.querySelectorAll('.toggle-active').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.getAttribute('data-user-id');
+                const isActive = this.getAttribute('data-is-active') === 'true';
+                const currentUserId = '{{ request.user.id }}';
+                
+                if (userId === currentUserId) {
+                    alert('No puedes cambiar el estado de tu propio perfil.');
+                    return;
+                }
+
+                const action = isActive ? 'desactivar' : 'activar';
+                if (confirm(`¿Estás seguro que deseas ${action} este perfil?`)) {
+                    fetch(`/users/toggle-active/${userId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(`Perfil ${action}do exitosamente.`);
+                            window.location.reload();
+                        } else {
+                            alert('Error al cambiar el estado del usuario.');
+                        }
+                    });
+                }
+            });
+        });
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        function openUserModal(title, url) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = '<p>Cargando formulario...</p>';
+            userModal.show();
+    
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    modalBody.innerHTML = html;
+                    const form = modalBody.querySelector('form');
+                    if (form) {
+                        setupFormSubmission(form);
+                    } else {
+                        modalBody.innerHTML = '<p class="text-danger">Error: No se pudo cargar el formulario</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error cargando el formulario:', error);
+                    modalBody.innerHTML = '<p class="text-danger">Error al cargar el formulario</p>';
+                });
+        }
+    
+        function setupFormSubmission(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        userModal.hide();
+                        window.location.reload();
+                    } else {
+                        console.log('Form errors:', data.errors);  // Add this line for debugging
+                        let errorMessage = 'Error. Por favor, revise los errores en el formulario:\n';
+                        for (let field in data.errors) {
+                            errorMessage += `${field}: ${data.errors[field].join(', ')}\n`;
+                        }
+                        alert(errorMessage);
+                        for (let field in data.errors) {
+                            let errorElement = form.querySelector(`#div_id_${field}`);
+                            if (errorElement) {
+                                errorElement.classList.add('has-error');
+                                let errorSpan = errorElement.querySelector('.help-block');
+                                if (errorSpan) {
+                                    errorSpan.textContent = data.errors[field][0];
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
     });
 </script>
-
 {% endblock %}
