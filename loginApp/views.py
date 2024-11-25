@@ -18,7 +18,7 @@ def home(request):
     if request.user.is_authenticated:
         return render(request, 'home.html')
     else:
-        return render('inicio.html')
+        return render(request,'inicio.html')
 
 def inicio(request):
     return render('inicio.html')
