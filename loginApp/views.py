@@ -20,7 +20,8 @@ def home(request):
     else:
         return render('inicio.html')
 
-
+def inicio(request):
+    return render('inicio.html')
 
 def signin(request):
     if request.method == 'GET':

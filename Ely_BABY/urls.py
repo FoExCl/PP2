@@ -23,6 +23,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('inicio/', views.inicio, name='inicio'),
     path('signin/', views.signin, name='signin'),
 
     path('users/', views.user_list, name='userlist'),
