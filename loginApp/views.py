@@ -18,49 +18,8 @@ def home(request):
     if request.user.is_authenticated:
         return render(request, 'home.html')
     else:
-        return redirect('signin')
+        return redirect('inicio.html')
 
-
-def signup(request):
-    if request.method == 'GET':
-        return render(request, 'signup.html', {
-            'form': UserCreationForm()
-        })
-    else:
-        try:
-            if request.POST['password1'] == request.POST['password2']:
-                user = User.objects.create_user(
-                    username=request.POST['usuario'], 
-                    password=request.POST['password1'],
-                    first_name=request.POST['nombre'],
-                    last_name=request.POST['apellido'],
-                    email=request.POST['correo']
-                )
-
-                if request.POST['user_type'] == 'admin':
-                    user.is_superuser = True
-                    user.is_staff = True
-                else:
-                    user.is_superuser = False
-                    user.is_staff = False
-
-                user.save()
-                return redirect('userlist')
-            else:
-                return render(request, 'signup.html', {
-                    'form': UserCreationForm(),
-                    'error': 'Passwords do not match'
-                })
-        except KeyError as e:
-            return render(request, 'signup.html', {
-                'form': UserCreationForm(),
-                'error': f'Missing field: {str(e)}'
-            })
-        except IntegrityError:
-            return render(request, 'signup.html', {
-                'form': UserCreationForm(),
-                'error': 'User already exists'
-            })
 
 
 def signin(request):

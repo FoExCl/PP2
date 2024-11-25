@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ely Baby - Ropa para Bebés</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fdf2f8;
+            background-image: 
+                linear-gradient(45deg, #fbcfe8 25%, transparent 25%),
+                linear-gradient(-45deg, #fbcfe8 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #fbcfe8 75%),
+                linear-gradient(-45deg, transparent 75%, #fbcfe8 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            min-height: 100vh;
+        }
+
+        /* Header y navegación */
+        header {
+            background: linear-gradient(to right, #db2777, #ec4899);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+    font-family: 'Pacifico', cursive; /* Una fuente más infantil y divertida */
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.logo span {
+    color: #fdf2f8; /* Un tono más claro */
+    margin-left: 10px;
+    font-weight: 700;
+}
+
+/* Efecto hover subtle */
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+}
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #f2f8f8;
+            ;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 2rem;
+        }
+        
+
+        .nav-link {
+            color: #f2f8f8;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color:  rgba(15, 15, 15, 0.2);;
+            transform: translateY(-2px);
+        }
+
+        .nav-mobile {
+            display: none;
+            position: relative;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #db2777;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-mobile .nav-link {
+            display: flex;
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            align-items: center;
+        }
+        .nav-mobile .nav-link i {
+    margin-right: 10px;
+    color: white;
+    width: 20px;
+    text-align: center;
+}
+
+        .nav-mobile .nav-link:hover {
+            background-color: #0a0a0a;
+        }
+
+        /* Contenido principal */
+        main {
+            padding: 2rem 0;
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .welcome-title {
+            color: #db2777;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-text {
+            color: #4b5563;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, #db2777, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(219, 39, 119, 0.3);
+        }
+
+        /* Features section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #db2777;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: #374151;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-desktop {
+                display: none;
+            }
+
+            .nav-mobile.active {
+                display: block;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+        .contact-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.contact-section h2 {
+    color: #db2777;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px #A0B0AF(247, 3, 3, 0);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.contact-card i {
+    font-size: 2.5rem;
+    color: #db2777;
+    margin-bottom: 1rem;
+}
+.contact-card h3 {
+    color: #374151;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+    color:  #6b7280;
+}
+
+@keyframes contactAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+h2 {
+  animation: contactAnimation 1.2s ease-out;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 2.2rem;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgb(251, 253, 255);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+
+h2:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+h2:hover {
+  color: #01887f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-section h2 {
+        font-size: 2rem;
+    }
+
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+}
+.nav-link svg {
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.logo {
+        font-size: 2rem;
+    }
+
+    .logo:active {
+        transform: scale(0.95);
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">Ely <span>Baby</span></h1>
+                <button class="menu-btn" id="menuBtn">☰</button>
+                <nav class="nav-desktop">
+                    <a href="/Iniciar Sesion" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 20 20">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                        </svg>
+                        Iniciar Sesion
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<nav class="nav-mobile" id="mobileMenu">
+    <a href="/inicio/singin" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 20 20">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+        </svg> Iniciar sesion
+    </a>
+
+</nav>
+
+    <main>
+        <div class="container">
+            <section class="welcome-section">
+                <h2 class="welcome-title">Bienvenidos a Ely Baby</h2>
+                <p class="welcome-text">
+                    Descubre nuestra hermosa colección de ropa para bebés y niños. 
+                    Prendas cómodas, seguras y adorables para los más pequeños de la casa.
+                </p>
+                
+            </section>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">👶</div>
+                    <h3 class="feature-title">Calidad Premium</h3>
+                    <p class="feature-text">Materiales suaves y seguros para la piel delicada de tu bebé</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌈</div>
+                    <h3 class="feature-title">Diseños Únicos</h3>
+                    <p class="feature-text">Estilos modernos y divertidos para cada ocasión</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <h3 class="feature-title">Excelente Servicio</h3>
+                    <p class="feature-text">Atención personalizada</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="contact-section">
+        
+        <h2>Contácto</h2><br>
+        <div class="contact-info">
+            <div class="contact-card">
+                <i class="fas fa-phone"></i>
+                <h3>Teléfono</h3>
+                <p>0387 592-1386</p>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Ubicación</h3>
+                <p> La Florida 366</p>
+            </div>
+        </div>
+    </section>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script>
+        // Manejo del menú hamburguesa
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('active');
+            menuBtn.textContent = isMenuOpen ? '✕' : '☰';
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        const mobileLinks = mobileMenu.getElementsByClassName('nav-link');
+        Array.from(mobileLinks).forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuBtn.textContent = '☰';
+                isMenuOpen = false;
+            });
+        });
+
+        // Cerrar menú al redimensionar la ventana
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                mobileMenu.classList.remove('active');
+                menuBtn.textContent = '☰';
+                isMenuOpen = false;
+            }
+        });
+    </script>
+</body>
+</html>
