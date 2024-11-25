@@ -21,7 +21,7 @@ def home(request):
         return render(request,'inicio.html')
 
 def inicio(request):
-    return render('inicio.html')
+    return render(request,'inicio.html')
 
 def signin(request):
     if request.method == 'GET':
@@ -37,7 +37,7 @@ def signin(request):
                })
         else:
             login(request, user)
-            return redirect('user')
+            return redirect('home')
 
 
 def exit(request):

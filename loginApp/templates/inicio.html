@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ely Baby - Ropa para Bebés</title>
+{% extends 'base.html' %}
+{% block content %}
     <style>
         /* Reset básico */
         * {
@@ -343,8 +339,7 @@ h2:hover {
     }
 
     </style>
-</head>
-<body>
+
     <header>
         <div class="container">
             <div class="header-content">
@@ -455,5 +450,5 @@ h2:hover {
             }
         });
     </script>
-</body>
-</html>
+{% endblock content %}
+
