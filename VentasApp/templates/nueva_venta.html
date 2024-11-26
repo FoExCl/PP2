@@ -486,7 +486,7 @@ body {
               <thead class="table-dark"> 
                 <tr>
                   <th>ID</th>
-                  <th>Descripcion</th>
+                  <th>Tipo</th>
                   <th>Talle</th>
                   <th>Género</th>
                   <th>Color</th>
@@ -498,7 +498,7 @@ body {
                 <tr data-id="{{ producto.id_productos }}" data-cantidad="{{ producto.cantidad_producto }}"
                 class="{% if producto.cantidad_producto == 0 %} bg-danger {% elif producto.cantidad_producto < 6 %} bg-warning {% endif %}">
                   <td>{{ producto.id_productos }}</td>
-                  <td>{{ producto.descripcion }}</td>
+                  <td>{{ producto.tipo_prod }}</td>
                   <td>{{ producto.talle_prod }}</td>
                   <td>{{ producto.genero_prod }}</td>
                   <td>{{ producto.color_prod }}</td>

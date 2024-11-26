@@ -144,7 +144,8 @@ def detalle_venta_view(request, id_venta):
 
     # Ejecutar el procedimiento almacenado para obtener datos adicionales
     with connection.cursor() as cursor:
-        cursor.callproc('VerVenta', [id_venta])
+        #cursor.callproc('VerVenta', [id_venta])
+        cursor.callproc('VerVenta', [id_factura])
         result = cursor.fetchall()
 
     # Procesar el resultado del procedimiento almacenado
