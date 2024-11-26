@@ -140,40 +140,40 @@ def get_ventas_data(request):
 
 
 def detalle_venta_view(request, id_venta):
-    
+    venta = get_object_or_404(Ventas, id_venta=id_venta)
+
     with connection.cursor() as cursor:
         cursor.callproc('VerVenta', [id_venta])
         result = cursor.fetchall()
-    
-    
-    detalles_venta = []
-    for row in result:
-        detalles_venta.append({
-           "id_venta": row[0],
-           "fecha_venta": row[1],
-           "total_factura": row[2],
-           "descuento_factura": row[3],
-           "metodo_pago": row[4],
-           "id_clientes": row[5],
-        })
-    
-    venta= get_object_or_404(Ventas, id_venta=id_venta)
-  
-    cliente= Facturas.objects.select_related("id_clientes").filter(id_factura=venta.id_venta).first()
 
- 
-    caja= Cajas.objects.all()
+    detalles_venta = [
+        {
+            "id_venta": row[0],
+            "fecha_venta": row[1],
+            "total_factura": row[2],
+            "descuento_factura": row[3],
+            "metodo_pago": row[4],
+            "id_clientes": row[5],
+        }
+        for row in result
+    ]
 
+    cliente = (
+        Facturas.objects
+        .select_related("id_clientes")
+        .filter(id_factura__in=[detalle["id_venta"] for detalle in detalles_venta])
+        .first()
+    )
 
-    productos= DetalleVentas.objects.filter(id_venta=venta)
+    caja = Cajas.objects.filter(id_caja=venta.id_caja.id_caja).first()
 
+    productos = DetalleVentas.objects.filter(id_venta=venta).select_related('id_prod')
 
-    context= {
+    context = {
         "detalles_venta": detalles_venta,
         "venta": venta,
         "caja": caja,
         "cliente": cliente,
         "productos": productos,
     }
-    
-    return render(request, 'detalle_venta.html', {'id_venta': id_venta})
+    return render(request, 'detalle_venta.html', context)

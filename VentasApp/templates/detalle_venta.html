@@ -27,71 +27,54 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>Detalles de la Venta</h1>
+    <div class="container my-5">
+        <!-- Detalle de la Venta -->
+        <h1 class="text-center mb-4">Detalle de la Venta {{ venta.id_venta }}</h1>
 
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Información de la Venta</h3>
-                <p><strong>ID Venta:</strong> {{ venta.id_venta }}</p>
+        <div class="row mb-4">
+            <div class="col-md-6">
                 <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</p>
-                <p><strong>Descripción de la Venta:</strong> {{ venta.descripcion_venta_realizada }}</p>
-            </div>
-        </div>
-
-        <div class="card mt-3">
-            <div class="card-body">
-                <h3 class="card-title">Detalles del Cliente</h3>
-                <p><strong>Cliente:</strong> {{ cliente.id_clientes.nombre|default:"No disponible" }}</p>
-                <p><strong>Dirección:</strong> {{ cliente.id_clientes.direccion }}</p>
-                <p><strong>Email:</strong> {{ cliente.id_clientes.email }}</p>
-            </div>
-        </div>
-
-        <div class="card mt-3">
-            <div class="card-body">
-                <h3 class="card-title">Detalles de la Factura</h3>
-                <p><strong>Total Factura:</strong> ${{ detalles_venta.0.total_factura }}</p>
-                <p><strong>Descuento:</strong> ${{ detalles_venta.0.descuento_factura }}</p>
+                <p><strong>Total Factura:</strong> {{ detalles_venta.0.total_factura }}</p>
+                <p><strong>Descuento:</strong> {{ detalles_venta.0.descuento_factura }}</p>
                 <p><strong>Método de Pago:</strong> {{ detalles_venta.0.metodo_pago }}</p>
             </div>
         </div>
 
-        <div class="card mt-3">
-            <div class="card-body">
-                <h3 class="card-title">Productos Vendidos</h3>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID Producto</th>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for producto in productos %}
-                            <tr>
-                                <td>{{ producto.id_prod.id_productos }}</td>
-                                <td>{{ producto.id_prod.descripcion }}</td>
-                                <td>{{ producto.cant_prod_vendido }}</td>
-                                <td>${{ producto.subtotal }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <!-- Información del Cliente -->
+        <h2 class="mt-4">Cliente</h2>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p><strong>Nombre:</strong> {{ cliente.id_clientes.nombre_cli }} {{ cliente.id_clientes.apellido_cli }}</p>
+                <p><strong>DNI:</strong> {{ cliente.id_clientes.dni }}</p>
+                <p><strong>Teléfono:</strong> {{ cliente.id_clientes.telefono }}</p>
             </div>
         </div>
 
-        <div class="card mt-3">
-            <div class="card-body">
-                <h3 class="card-title">Caja Asociada</h3>
-                <p><strong>ID Caja:</strong> {{ caja.first.id_caja }}</p>
-            </div>
+        <!-- Productos -->
+        <h2 class="mt-4">Productos</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.id_prod.descripcion }}</td>
+                        <td>{{ producto.cant_prod_vendido }}</td>
+                        <td>{{ producto.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (Optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
