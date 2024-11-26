@@ -27,17 +27,36 @@ body {
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   min-height: 100vh;
 }
+#cuadro{
+        background-color: #be185d;
+        color: #f0f0f0f0;
+        
+      }
+.sorting{
+  color:white;
+  background-color: white;
+}
 .container-box {
   background-color: white;
+  color: #be185d;
   border: 1px solid #ccc;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px;
   margin-bottom: 15px;
 }
-
+label{
+  color: black;
+}
+.dataTables_info{
+  color: black;
+}
+.form-control{
+    color:black;
+}
 .title-box {
   background-color: white;
+  color:#be185d;
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
@@ -49,6 +68,16 @@ body {
   max-width: 600px;
 }
 
+.btn-primary {
+          background-color: #4D9D91;
+          border-color: #3d857a;
+          color: #ffffff;
+      }
+.btn-success {
+          background-color: #4D9D91;
+          border-color: #3d857a;
+          color: #ffffff;
+      }
 .header {
   display: flex;
   justify-content: space-between;
@@ -133,7 +162,7 @@ body {
 }
 
 .bg-danger {
-  background-color: #f3858e !important;
+  background-color: #f39ca3 !important;
 }
 .bg-warning {
   background-color: #f8de88 !important;
@@ -161,7 +190,7 @@ body {
           </div>
           <div class="table-responsive">
             <table id="stockTable" class="table table-striped table-bordered w-100">
-              <thead class="table-dark">
+              <thead class="table" id="cuadro">
                 <tr>
                   <th>ID</th>
                   <th>Descripcion</th>

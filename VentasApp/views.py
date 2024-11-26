@@ -141,7 +141,6 @@ def get_ventas_data(request):
 def detalle_venta_view(request, id_venta):
 
     venta = get_object_or_404(Ventas, id_venta=id_venta)
-
     with connection.cursor() as cursor:
         cursor.callproc('VerVenta', [id_venta])
         #cursor.callproc('VerVenta', [id_factura])

@@ -28,25 +28,24 @@ body {
 }
 
 .container-box {
-    background-color: white;
-    border: 3px solid #979595;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    max-width: 600px;
-    margin: auto;
-    margin-top: 20px;
+  background-color: white;
+  color: #be185d;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px;
+  margin-bottom: 15px;
 }
 
 .title-box {
   background-color: white;
-  border: 2px solid #949090;
+  color:#be185d;
+  border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
   margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px;
   margin: 20px auto;
   width: 90%;
   max-width: 600px;
@@ -63,9 +62,13 @@ label {
 .form-group {
     margin-bottom: 15px;
 }
+.mb-3{
+    color:black;
+}
 
 .options-box {
     background-color: white;
+    color:#be185d;
     border: 1px solid #ccc;
     margin: 20px auto;
     padding: 15px;
@@ -78,6 +81,7 @@ label {
     justify-content: space-between;
     align-items: center;
 }
+
     </style>
 </head>
 <body>
@@ -91,14 +95,14 @@ label {
     <form method="post">
       {% csrf_token %}
       <div class="mb-3">
-          <label for="descripcion" class="form-label">Descripción</label>
+          <label for="descripcion" class="form-label"><p>Descripción</p></label>
           <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
       </div>
   </div>
     
   <div class="container-box">
       <div class="mb-3">
-          <label for="tipo_prod" class="form-label">Tipo de Producto</label>
+          <label for="tipo_prod" class="form-label"><p>Tipo de Producto</p></label>
           <input type="text" class="form-control" id="tipo_prod" name="tipo_prod" required>
       </div>
       <div class="mb-3">

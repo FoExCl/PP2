@@ -7,7 +7,7 @@
     <title>Caja</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{% static 'Caja' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '../cajaapp/css/caja.css' %}">
   <style>
     * {
       margin: 0;
@@ -27,133 +27,50 @@
         background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         min-height: 100vh;
     }
+    h1 {
+      color: #be185d;
+    }
+    .title-box {
+          background-color: #ffffff;
+          border-radius: 10px;
+          padding: 20px;
+          margin: 20px auto;
+          text-align: center;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          color: #be185d;
+          max-width: 800px;
+      }
+
     .container-box {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-}
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
 
-.title-box {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  width: 90%;
-  max-width: 600px;
-}
+    .table-container {
+          padding: 15px;
+    }
+    #cuadro{
+      background-color: #be185d;
+      color: #f0f0f0;
+    }
+    .btn-primary {
+      background-color: #4D9D91;
+      border-color: #3d857a;
+      color: #ffffff;
+    }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 70%;
-}
-
-#search-input {
-  flex: 2;
-  min-width: 500px;
-  max-width: 100%;
-}
-
-#search-btn,
-.btn-warning {
-  flex-shrink: 0;
-}
-
-.dataTables_filter.d-flex {
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.dataTables_filter select.form-control {
-  width: auto;
-  min-width: 150px;
-}
-
-.filter-container {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  gap: 8px;
-}
-
-#filter-select {
-  flex: 2;
-  min-width: 200px;
-}
-
-.btn-info {
-  flex-shrink: 0;
-}
-
-.btn {
-  font-size: 0.9rem;
-  padding: 5px 10px;
-}
-
-.table th, .table td {
-  font-size: 0.9rem;
-  padding: 8px;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-.pagination {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.page-item {
-  margin: 0 5px;
-}
-
-.page-link {
-  text-decoration: none;
-  padding: 10px 15px;
-  color: #007bff;
-}
-
-.page-link:hover {
-  background-color: #f8f9fa;
-  border-radius: 4px;
-}
-
-.bg-danger {
-  background-color: #f3858e !important;
-}
-
-.bg-warning {
-  background-color: #f8de88 !important;
-}
-
-.btn-danger[title],
-.btn-warning[title] {
-  cursor: pointer;
-}
+    .btn-info {
+      background-color: #3f76eed8;
+      border-color: #3f76eed8;
+      color: #ffffff;
+    }
+    .btn-info:hover {
+      background-color: #3f76eed8;
+    }
   </style>
 </head>
 <body>
@@ -180,7 +97,7 @@
   
           <div class="table-container table-responsive">
             <table id="cajas-table" class="table table-striped table-bordered w-100">
-              <thead class="table-dark">
+              <thead class="table" id="cuadro">
                 <tr>
                   <th>ID Caja</th>
                   <th>Empleado</th>
@@ -210,7 +127,7 @@
                   <td>{{ caja.total_ingresos_caja }}</td>
                   <td>
                     <a href="{% url 'detalle_caja' caja.id_caja %}" class="btn btn-info btn-sm">
-                        <i class="fa-solid fa-eye"></i>
+                        <i class="fas fa-eye"></i>Detalles
                     </a>
                 </td>
                 </tr>
