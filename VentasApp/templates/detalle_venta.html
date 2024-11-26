@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de la Venta</title>
+    <title>Detalles de Venta</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
     <style>
         * {
@@ -42,7 +42,7 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h3 class="card-title">Detalles del Cliente</h3>
-                <p><strong>Cliente:</strong> {{ cliente.id_clientes.nombre }}</p>
+                <p><strong>Cliente:</strong> {{ cliente.id_clientes.nombre|default:"No disponible" }}</p>
                 <p><strong>Dirección:</strong> {{ cliente.id_clientes.direccion }}</p>
                 <p><strong>Email:</strong> {{ cliente.id_clientes.email }}</p>
             </div>
