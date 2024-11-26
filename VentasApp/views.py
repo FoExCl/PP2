@@ -137,15 +137,15 @@ def get_ventas_data(request):
         })
 
     return JsonResponse({'data': data})
-
+"""
 def detalle_venta_view(request, id_venta):
     # Obtener la venta específica o devolver 404 si no existe
     venta = get_object_or_404(Ventas, id_venta=id_venta)
 
     # Ejecutar el procedimiento almacenado para obtener datos adicionales
     with connection.cursor() as cursor:
-        #cursor.callproc('VerVenta', [id_venta])
-        cursor.callproc('VerVenta', [id_factura])
+        cursor.callproc('VerVenta', [id_venta])
+        #cursor.callproc('VerVenta', [id_factura])
         result = cursor.fetchall()
 
     # Procesar el resultado del procedimiento almacenado
@@ -187,12 +187,22 @@ def detalle_venta_view(request, id_venta):
     return render(request, 'detalle_venta.html', context)
 """
 def detalle_venta_view(request, id_venta):
+    # Obtener la venta específica o devolver 404 si no existe
     venta = get_object_or_404(Ventas, id_venta=id_venta)
 
+    # Obtener el id_factura asociado con esta venta
+    factura = Facturas.objects.filter(id_venta=venta).first()
+    if not factura:
+        return JsonResponse({"error": "Factura no encontrada para esta venta."})
+
+    id_factura = factura.id_factura  # Obtén el id_factura
+
+    # Ejecutar el procedimiento almacenado para obtener detalles de la venta usando el id_factura
     with connection.cursor() as cursor:
-        cursor.callproc('VerVenta', [id_venta])
+        cursor.callproc('VerVenta', [id_factura])  # Llamada usando id_factura
         result = cursor.fetchall()
 
+    # Procesar el resultado del procedimiento almacenado
     detalles_venta = [
         {
             "id_venta": row[0],
@@ -205,17 +215,21 @@ def detalle_venta_view(request, id_venta):
         for row in result
     ]
 
-    cliente = (
-        Facturas.objects
-        .select_related("id_clientes")
-        .filter(id_factura__in=[detalle["id_venta"] for detalle in detalles_venta])
-        .first()
-    )
+    # Si no hay resultados, mostrar un error
+    if not detalles_venta:
+        return JsonResponse({"error": "No se encontraron detalles para esta venta."})
 
+    # Obtener la información del cliente a partir de los datos obtenidos
+    cliente_id = detalles_venta[0]["id_clientes"]
+    cliente = Clientes.objects.filter(id_clientes=cliente_id).first()
+
+    # Obtener la caja asociada a la venta
     caja = Cajas.objects.filter(id_caja=venta.id_caja.id_caja).first()
 
+    # Obtener los productos relacionados a través de `DetalleVentas`
     productos = DetalleVentas.objects.filter(id_venta=venta).select_related('id_prod')
 
+    # Contexto para la plantilla
     context = {
         "detalles_venta": detalles_venta,
         "venta": venta,
@@ -223,5 +237,5 @@ def detalle_venta_view(request, id_venta):
         "cliente": cliente,
         "productos": productos,
     }
+
     return render(request, 'detalle_venta.html', context)
-"""
