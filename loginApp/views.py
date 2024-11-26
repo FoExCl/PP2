@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
-from django.db import IntegrityError
-from loginApp.models import Empleados, AuthUser, AuthUserGroups, AuthUserUserPermissions
-from loginApp.forms import EmpleadoCreationForm, EditarEmpleadoForm
+from .models import Empleados, AuthUser, AuthUserGroups, AuthUserUserPermissions
+from .forms import EmpleadoCreationForm, EditarEmpleadoForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
