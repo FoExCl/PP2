@@ -10,39 +10,35 @@
   <link rel="stylesheet" type="text/css" href="{% static 'inventarioapp/css/inventario.css' %}">
   <style>
   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fdf2f8;
-    background-image: 
-        linear-gradient(45deg, #fbcfe8 25%, transparent 25%),
-        linear-gradient(-45deg, #fbcfe8 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #fbcfe8 75%),
-        linear-gradient(-45deg, transparent 75%, #fbcfe8 75%);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-    min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background-color: #fdf2f8;
+  background-image: 
+      linear-gradient(45deg, #fbcfe8 25%, transparent 25%),
+      linear-gradient(-45deg, #fbcfe8 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #fbcfe8 75%),
+      linear-gradient(-45deg, transparent 75%, #fbcfe8 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  min-height: 100vh;
 }
-
 .container-box {
-    background-color: white;
-    border: 3px solid #979595;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    max-width: 600px;
-    margin: auto;
-    margin-top: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 }
 
 .title-box {
   background-color: white;
-  border: 2px solid #949090;
+  border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -53,31 +49,98 @@ body {
   max-width: 600px;
 }
 
-.title-box h1 {
-    margin: 0;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-label {
-    font-weight: bold;
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70%;
 }
 
-.form-group {
-    margin-bottom: 15px;
+#search-input {
+  flex: 2;
+  min-width: 500px;
+  max-width: 100%;
 }
 
-.options-box {
-    background-color: white;
-    border: 1px solid #ccc;
-    margin: 20px auto;
-    padding: 15px;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#search-btn,
+.btn-warning {
+  flex-shrink: 0;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+#filter-select {
+  flex: 2;
+  min-width: 200px;
+}
+
+.btn-info {
+  flex-shrink: 0;
+}
+
+.btn {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+}
+
+.table th, .table td {
+  font-size: 0.9rem;
+  padding: 8px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  text-decoration: none;
+  padding: 10px 15px;
+  color: #007bff;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.bg-danger {
+  background-color: #f3858e !important;
+}
+.bg-warning {
+  background-color: #f8de88 !important;
+}
+.btn-danger[title],
+.btn-warning[title] {
+  cursor: pointer;
 }
   </style>
 </head>
