@@ -50,7 +50,6 @@ class AuthUser(models.Model):
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
 
-
     class Meta:
         managed = False
         db_table = 'auth_user'
@@ -86,6 +85,7 @@ class Cajas(models.Model):
     fechacierrecaja = models.DateTimeField(db_column='FechaCierreCaja')  # Field name made lowercase.
     total_ingresos_caja = models.DecimalField(db_column='Total_ingresos_Caja', max_digits=10, decimal_places=2)  # Field name made lowercase.
     total_egresos_caja = models.DecimalField(db_column='Total_Egresos_Caja', max_digits=10, decimal_places=2)  # Field name made lowercase.
+    monto_inicial = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -196,7 +196,6 @@ class Empleados(models.Model):
     correo = models.CharField(max_length=50)
     direccion = models.CharField(max_length=60, blank=True, null=True)
     id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
-    
 
     class Meta:
         managed = False
@@ -209,6 +208,7 @@ class Facturas(models.Model):
     total = models.DecimalField(max_digits=7, decimal_places=2)
     descuento = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     metodo_pago = models.CharField(max_length=200)
+    vuelto = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
