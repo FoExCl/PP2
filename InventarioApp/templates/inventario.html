@@ -216,9 +216,11 @@ label{
                   <td><i class="fa-solid fa-dollar-sign"></i>{{ producto.precio_unitario_venta }}</td>
                   <td>{{ producto.cantidad_producto }}</td>
                   <td>
+                    {% if request.user.is_staff %}
                     <a href="{% url 'editar_producto' producto.id_productos %}" class="btn btn-success">
                       <i class="fa-solid fa-pen-to-square"></i>
                     </a>
+                    {% endif %}
                     {% if producto.cantidad_producto == 0 %}
                       <button class="btn btn-danger" title="No hay stock">
                         <i class="fa-solid fa-triangle-exclamation"></i>

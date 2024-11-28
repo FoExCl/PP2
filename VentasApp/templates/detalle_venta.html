@@ -116,6 +116,9 @@
             <p><strong>Total Factura:</strong> {{ detalles_venta.0.total_factura }}</p>
             <p><strong>Descuento:</strong> {{ detalles_venta.0.descuento_factura }}</p>
             <p><strong>Método de Pago:</strong> {{ detalles_venta.0.metodo_pago }}</p>
+            {% if detalles_venta.0.metodo_pago == "Efectivo" %}
+                <p><strong>Vuelto:</strong> {{ detalles_venta.0.vuelto }}</p>
+            {% endif %}
         </div>
 
         <!-- Información del Cliente -->

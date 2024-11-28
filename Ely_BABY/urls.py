@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from loginApp import views
+from VentasApp.views import nueva_venta_view
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
@@ -36,6 +37,7 @@ urlpatterns = [
     path('logout/', views.exit, name='exit'),
     path('inventario/', include('InventarioApp.urls')),
     path('caja/', include('CajaApp.urls')),
+    path('nueva_venta/', nueva_venta_view, name='nueva_venta'),
     path('ventas/', include('VentasApp.urls'))
 ]
     

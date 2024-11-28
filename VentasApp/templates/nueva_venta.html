@@ -441,15 +441,21 @@ h3{
                 <input type="number" id="descuento-input" name="descuento" disabled/>
             </div>
             <div class="linea-dos">
+                <button type="button"><i class="fa-regular fa-circle-xmark"></i> Sin Descuento</button>
                 <button type="button" class="tipo-descuento" data-tipo="porcentaje"><i class="fa-solid fa-percent"></i> Porcentaje</button>
                 <button type="button" class="tipo-descuento" data-tipo="valor-fijo"><i class="fa-solid fa-dollar-sign"></i> Valor Fijo</button>
             </div>
             <div class="linea-uno">
                 <strong><i class="fa-solid fa-hand-holding-dollar"></i> Método de pago:</strong>
                 <select id="metodo-pago" name="metodo_pago">
-                    <option value="Efectivo">Efectivo</option>
                     <option value="Tarjeta">Tarjeta</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Trasferencia">Trasferencia</option>
                 </select>
+            </div>
+            <div class="linea-uno">
+                <strong>Vuelto:</strong>
+                <input type="number" id="vuelto-input" name="vuelto" disabled/>
             </div>
             <div class="subtotal-total">
                 <span>Total:</span>
@@ -485,8 +491,10 @@ h3{
         </div>
 
         <div class="options-box">
-            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Generar Venta</button>
-            <a href="{% url 'ventas' %}" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Salir</a>
+            <button type="submit" class="btn btn-success" formaction="{{ previous_url }}"><i class="fa-solid fa-check"></i> Generar Venta</button>        
+            <a href="{{ previous_url }}" class="btn btn-danger">
+                <i class="fa-solid fa-xmark"></i> Salir
+            </a>
         </div>
     </form>
 
@@ -718,12 +726,17 @@ h3{
             button.addEventListener('click', () => {
                 document.querySelectorAll('.descuento button').forEach(btn => btn.classList.remove('selected'));
                 button.classList.add('selected');
-    
+        
                 const inputDescuento = document.querySelector('.descuento input');
-                inputDescuento.disabled = button.classList.contains('sin-descuento');
-                inputDescuento.value = '';
-                if (!button.classList.contains('sin-descuento')) inputDescuento.focus();
-    
+                
+                if (button.textContent.trim().includes('Sin Descuento')) {
+                    inputDescuento.disabled = true;
+                    inputDescuento.value = '';
+                } else {
+                    inputDescuento.disabled = false;
+                    if (!button.classList.contains('sin-descuento')) inputDescuento.focus();
+                }
+        
                 calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
             });
         });
@@ -736,6 +749,20 @@ h3{
             calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
         });
     </script>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const metodosPagoSelect = document.getElementById('metodo-pago');
+            const vueltoInput = document.getElementById('vuelto-input');
+        
+            metodosPagoSelect.addEventListener('change', function() {
+                if (this.value === 'Efectivo') {
+                    vueltoInput.disabled = false;
+                } else {
+                    vueltoInput.disabled = true;
+                    vueltoInput.value = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

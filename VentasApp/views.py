@@ -9,9 +9,9 @@ from django.contrib import messages
 from decimal import Decimal
 from django.db import connection
 
-
-
 def nueva_venta_view(request):
+    previous_url = request.META.get('HTTP_REFERER', 'ventas')
+
     if not Cajas.objects.filter(estado_caja="Abierta").exists():
         messages.error(request, "Necesita abrir la caja para hacer una venta.")
         return redirect('ventas')
@@ -40,8 +40,15 @@ def nueva_venta_view(request):
                 metodo_pago = request.POST.get('metodo_pago')
                 total = request.POST.get('total')
                 descuento = request.POST.get('descuento')
+                vuelto = request.POST.get('vuelto', '0')
 
-                nueva_factura = Facturas(id_clientes=nuevo_cliente, total=total, descuento=descuento, metodo_pago=metodo_pago)
+                nueva_factura = Facturas(
+                    id_clientes=nuevo_cliente, 
+                    total=total, 
+                    descuento=descuento, 
+                    metodo_pago=metodo_pago,
+                    vuelto=vuelto
+                )
                 nueva_factura.full_clean()
                 nueva_factura.save()
 
@@ -81,7 +88,7 @@ def nueva_venta_view(request):
 
                 DetalleVentas.objects.bulk_create(detalles_venta)
 
-                return redirect('ventas')
+                return redirect(previous_url)
 
             except ValidationError as e:
                 return JsonResponse({"success": False, "error": str(e)})
@@ -92,7 +99,8 @@ def nueva_venta_view(request):
         'id_venta': id_venta,
         'id_factura': id_factura,
         'id_caja': id_caja,
-        'productos': productos
+        'productos': productos,
+        'previous_url': previous_url
     }
     return render(request, 'nueva_venta.html', context)
 
@@ -120,7 +128,8 @@ def get_ventas_data(request):
             'detalleventas__id_factura__id_clientes__nombre_cli',
             'detalleventas__id_factura__id_clientes__apellido_cli',
             'detalleventas__id_factura__descuento',
-            'detalleventas__id_factura__metodo_pago'
+            'detalleventas__id_factura__metodo_pago',
+            'detalleventas__id_factura__vuelto'
         )
         .distinct()
     )
@@ -133,7 +142,8 @@ def get_ventas_data(request):
             'total': float(venta['detalleventas__id_factura__total']) if venta['detalleventas__id_factura__total'] else 0,
             'cliente': f"{venta['detalleventas__id_factura__id_clientes__nombre_cli']} {venta['detalleventas__id_factura__id_clientes__apellido_cli']}".strip(),
             'descuento': float(venta['detalleventas__id_factura__descuento']) if venta['detalleventas__id_factura__descuento'] else 0,
-            'metodo_pago': venta['detalleventas__id_factura__metodo_pago']
+            'metodo_pago': venta['detalleventas__id_factura__metodo_pago'],
+            'vuelto': float(venta['detalleventas__id_factura__vuelto']) if venta['detalleventas__id_factura__vuelto'] else 0
         })
 
     return JsonResponse({'data': data})
@@ -143,7 +153,6 @@ def detalle_venta_view(request, id_venta):
     venta = get_object_or_404(Ventas, id_venta=id_venta)
     with connection.cursor() as cursor:
         cursor.callproc('VerVenta', [id_venta])
-        #cursor.callproc('VerVenta', [id_factura])
         result = cursor.fetchall()
 
     detalles_venta = [
@@ -153,7 +162,8 @@ def detalle_venta_view(request, id_venta):
             "total_factura": row[2],
             "descuento_factura": row[3],
             "metodo_pago": row[4],
-            "id_clientes": row[5],
+            "vuelto": row[5],
+            "id_clientes": row[6],
         }
         for row in result
     ]
@@ -176,5 +186,3 @@ def detalle_venta_view(request, id_venta):
         "productos": productos,
     }
     return render(request, 'detalle_venta.html', context)
-
-

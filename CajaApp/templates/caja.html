@@ -105,6 +105,7 @@
                   <th>Fecha Apertura</th>
                   <th>Fecha Cierre</th>
                   <th>Monto Inicial</th>
+                  <th>Total Egresos</th>
                   <th>Total Ingresos</th>
                   <th>Detalles</th>
                 </tr>
@@ -123,6 +124,7 @@
                       {{ caja.fechacierrecaja }}
                     {% endif %}
                   </td>
+                  <td>{{ caja.monto_inicial }}</td>
                   <td>{{ caja.total_egresos_caja }}</td>
                   <td>{{ caja.total_ingresos_caja }}</td>
                   <td>
