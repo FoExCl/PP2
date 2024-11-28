@@ -171,19 +171,12 @@ def detalle_venta_view(request, id_venta):
 
     productos = DetalleVentas.objects.filter(id_venta=venta).select_related('id_prod')
 
-    total_calculado = sum(producto.subtotal for producto in productos)
-
-    venta.total_factura = total_calculado
-    venta.save()  
-    
     context = {
         "detalles_venta": detalles_venta,
         "venta": venta,
         "caja": caja,
         "cliente": cliente,
         "productos": productos,
-        "total_factura_calculado": total_calculado,  
     }
     return render(request, 'detalle_venta.html', context)
-
 
