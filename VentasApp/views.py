@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
 from django.db import connection
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
 
 
 
@@ -153,7 +155,8 @@ def detalle_venta_view(request, id_venta):
             "total_factura": row[2],
             "descuento_factura": row[3],
             "metodo_pago": row[4],
-            "id_clientes": row[5],
+            "vuelto": row[5], 
+            "id_clientes": row[6],
         }
         for row in result
     ]
@@ -168,12 +171,18 @@ def detalle_venta_view(request, id_venta):
 
     productos = DetalleVentas.objects.filter(id_venta=venta).select_related('id_prod')
 
+    total_calculado = sum(producto.subtotal for producto in productos)
+
+    venta.total_factura = total_calculado
+    venta.save()  
+    
     context = {
         "detalles_venta": detalles_venta,
         "venta": venta,
         "caja": caja,
         "cliente": cliente,
         "productos": productos,
+        "total_factura_calculado": total_calculado,  
     }
     return render(request, 'detalle_venta.html', context)
 

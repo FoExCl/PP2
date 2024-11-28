@@ -147,3 +147,57 @@ class EditarEmpleadoForm(forms.ModelForm):
             AuthUserGroups.objects.create(user=user, group=new_group)
 
         return empleado
+    
+
+
+
+class EditarPerfilForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, required=True, label="Nombre de usuario")
+
+    class Meta:
+        model = Empleados
+        fields = ['dni', 'nombre', 'apellido', 'edad', 'telefono', 'correo', 'direccion']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.id_user:
+            self.fields['username'].initial = self.instance.id_user.username
+            self.fields['nombre'].initial = self.instance.id_user.first_name
+            self.fields['apellido'].initial = self.instance.id_user.last_name
+            self.fields['correo'].initial = self.instance.id_user.email
+
+    def clean_correo(self):
+        correo = self.cleaned_data['correo']
+        if AuthUser.objects.filter(email=correo).exclude(id=self.instance.id_user.id).exists():
+            raise forms.ValidationError('Este correo electrónico ya está registrado por otro usuario.')
+        return correo
+
+    def save(self, commit=True):
+        empleado = super().save(commit=False)
+        user = empleado.id_user
+
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['nombre']
+        user.last_name = self.cleaned_data['apellido']
+        user.email = self.cleaned_data['correo']
+
+        if commit:
+            user.save()
+            empleado.save()
+
+        return empleado
+
+class CambiarContraseñaForm(forms.Form):
+    password_actual = forms.CharField(widget=forms.PasswordInput, label="Contraseña actual")
+    password_nueva = forms.CharField(widget=forms.PasswordInput, label="Nueva contraseña")
+    password_confirmacion = forms.CharField(widget=forms.PasswordInput, label="Confirmar nueva contraseña")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password_nueva = cleaned_data.get("password_nueva")
+        password_confirmacion = cleaned_data.get("password_confirmacion")
+
+        if password_nueva and password_confirmacion and password_nueva != password_confirmacion:
+            raise forms.ValidationError("Las nuevas contraseñas no coinciden.")
+
+        return cleaned_data

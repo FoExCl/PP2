@@ -78,8 +78,26 @@
             border-radius: 5px;
             text-align: center;
             transition: background-color 0.3s ease;
+            margin-bottom: 20px; 
+        }
+        .btn-regresar:hover {
+            background-color: #923d5f;
         }
 
+        .btn-imprimir{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #be185d;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; 
+        }
+        .btn-imprimir:hover {
+            background-color: #923d5f;
+        }
         .btn-regresar:hover {
             background-color: #9d174d;
         }
@@ -109,13 +127,19 @@
         <!-- Botón para regresar -->
         <a href="#" onclick="window.history.back();" class="btn-regresar">← Regresar</a>
 
+        <a onclick="window.print()" class="btn-imprimir">Imprimir</a>
+
         <!-- Detalle de la Venta -->
         <div class="card">
-            <h1>Detalle de la Venta {{ venta.id_venta }}</h1>
+            <h1>Detalle de la Venta</h1>
+            <p><strong>N° de Venta:</strong> {{ venta.id_venta }}</p>
             <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</p>
-            <p><strong>Total Factura:</strong> {{ detalles_venta.0.total_factura }}</p>
+            <p><strong>Total Factura:</strong> {{ total_factura_calculado }}</p>
             <p><strong>Descuento:</strong> {{ detalles_venta.0.descuento_factura }}</p>
             <p><strong>Método de Pago:</strong> {{ detalles_venta.0.metodo_pago }}</p>
+            {% if detalles_venta.0.metodo_pago == "Efectivo" %}
+                <p><strong>Vuelto:</strong> {{ detalles_venta.0.vuelto }}</p>
+            {% endif %}
         </div>
 
         <!-- Información del Cliente -->

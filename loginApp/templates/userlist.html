@@ -4,12 +4,6 @@
 {% include 'navbar.html' %}
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
     body {
         font-family: 'Arial', sans-serif;
         background-color: #fdf2f8;
@@ -22,75 +16,213 @@
         background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         min-height: 100vh;
     }
+    #cuadro{
+        background-color: #be185d;
+        color: #f0f0f0f0;
+        
+      }
+.sorting{
+  color:white;
+  background-color: white;
+}
+.container-box {
+  background-color: white;
+  color: #be185d;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px;
+  margin-bottom: 15px;
+}
+label{
+  color: black;
+}
+.dataTables_info{
+  color: black;
+}
+.form-control{
+    color:black;
+}
+.title-box {
+  background-color: white;
+  color:#be185d;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+}
 
-    .container-box {
-        background-color: white;
-        border: 1px solid #ccc;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 15px;
-        width: 100%;
-        max-width: 1200px;
+.btn-primary {
+          background-color: #4D9D91;
+          border-color: #3d857a;
+          color: #ffffff;
+      }
+.btn-success {
+          background-color: #4D9D91;
+          border-color: #3d857a;
+          color: #ffffff;
+      }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70%;
+}
+
+#search-input {
+  flex: 2;
+  min-width: 500px;
+  max-width: 100%;
+}
+
+#search-btn,
+.btn-warning {
+  flex-shrink: 0;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+#filter-select {
+  flex: 2;
+  min-width: 200px;
+}
+
+.btn-info {
+  flex-shrink: 0;
+}
+
+.btn {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+}
+
+.table th, .table td {
+  font-size: 0.9rem;
+  padding: 8px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  text-decoration: none;
+  padding: 10px 15px;
+  color: #007bff;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.bg-danger {
+  background-color: #f39ca3 !important;
+}
+.bg-warning {
+  background-color: #f8de88 !important;
+}
+.btn-danger[title],
+.btn-warning[title] {
+  cursor: pointer;
+}
+.btn-primary {
+        background-color: #be185d !important; /* Nuevo color base del botón */
+        border-color: #a31450 !important; /* Ajustar un tono más oscuro para el borde */
+        color: white !important; /* Asegurar que el texto sea legible */
+        outline: none !important;
     }
 
-    .title-box {
-        background-color: white;
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 1200px;
+    .btn-primary:hover {
+        background-color: #a31450 !important; /* Color al pasar el cursor */
+        border-color: #7f0f3c !important; /* Ajustar borde al pasar el cursor */
+        color: white !important;
     }
 
-    .table-product table {
-        width: 100%;
-        table-layout: fixed;
-        font-size: 0.9rem;
+    .btn-primary:focus, .btn-primary:active {
+        background-color: #a31450 !important; /* Color al hacer clic o enfocado */
+        border-color: #7f0f3c !important; /* Borde al hacer clic o enfocado */
+        outline: none !important;
+        box-shadow: none !important;
     }
+    .btn-secondary {
+    background-color: #be185d !important; /* Nuevo color base del botón */
+    border-color: #a31450 !important; /* Ajustar un tono más oscuro para el borde */
+    color: white !important; /* Asegurar que el texto sea legible */
+    outline: none !important;
+}
 
-    .table-product th, .table-product td {
-        word-wrap: break-word;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 8px;
-    }
-    .col-edad {
-        width: 60px;
-    }
-    .col-acciones{
-        width: 100px;
-    }
-    .col-estado{
-        width: 100px;
-    }
-    .inactive-user {
-    color: #999; 
-    background-color: transparent; 
-    }
+.btn-secondary:hover {
+    background-color: #a31450 !important; /* Color al pasar el cursor */
+    border-color: #7f0f3c !important; /* Ajustar borde al pasar el cursor */
+    color: white !important;
+}
+
+.btn-secondary:focus, .btn-secondary:active {
+    background-color: #a31450 !important; /* Color al hacer clic o enfocado */
+    border-color: #7f0f3c !important; /* Borde al hacer clic o enfocado */
+    outline: none !important;
+    box-shadow: none !important;
+}
 
     .inactive-user {
         background-color: #f8d7da;
         color: #721c24;
     }
 
-    @media (max-width: 768px) {
-        .search-container, #search-input, .filter-container {
-            width: 100%;
-        }
+    /* DataTables Responsive Fixes */
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+        margin-bottom: 10px;
+    }
 
-        .title-box, .container-box {
+    /* Action Buttons */
+    .btn-group-sm > .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1.5;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .container-box, .title-box {
             margin-left: auto;
             margin-right: auto;
             padding: 10px;
-        }
-
-        #search-input {
-            min-width: 100%;
         }
     }
 </style>
@@ -101,18 +233,18 @@
     </div>
     <div class="container-box">
         <div class="table-product">
-            <table class="table table-striped table-bordered">
+            <table id="userTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead class="table-dark">
                     <tr>
                         <th>DNI</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th class="col-edad">Edad</th>
+                        <th>Edad</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
                         <th>Dirección</th>
-                        <th class="col-estado">Estado</th>
-                        <th class="col-acciones">Acciones</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,21 +259,19 @@
                         <td>{{ empleado.direccion }}</td>
                         <td>{% if empleado.id_user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
                         <td>
-                            <button class="btn btn-success btn-sm edit-user" data-user-id="{{ empleado.id_user.id }}">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-warning btn-sm toggle-active" data-user-id="{{ empleado.id_user.id }}" data-is-active="{{ empleado.id_user.is_active|yesno:'true,false' }}">
-                                {% if empleado.id_user.is_active %}
-                                    <i class="fa-solid fa-user-slash"></i>
-                                {% else %}
-                                    <i class="fa-solid fa-user-check"></i>
-                                {% endif %}
-                            </button>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button class="btn btn-success edit-user" data-user-id="{{ empleado.id_user.id }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-warning toggle-active" data-user-id="{{ empleado.id_user.id }}" data-is-active="{{ empleado.id_user.is_active|yesno:'true,false' }}">
+                                    {% if empleado.id_user.is_active %}
+                                        <i class="fa-solid fa-user-slash"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-user-check"></i>
+                                    {% endif %}
+                                </button>
+                            </div>
                         </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="8" class="text-center">No hay usuarios registrados.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -170,8 +300,32 @@
     </div>
 </div>
 
+<!-- DataTables and Responsive Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1/datatables.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize DataTable
+        const userTable = $('#userTable').DataTable({
+            responsive: true,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+            },
+            columnDefs: [
+                { 
+                    targets: -1, // Last column (actions)
+                    orderable: false, // Disable sorting for actions column
+                    className: 'text-center'
+                },
+                { 
+                    targets: 3, // Age column 
+                    type: 'num' // Ensure numeric sorting for age
+                }
+            ]
+        });
+
         const userModal = new bootstrap.Modal(document.getElementById('userModal'));
         const modalBody = document.querySelector('#userModal .modal-body');
         const modalTitle = document.getElementById('userModalLabel');
@@ -301,7 +455,6 @@
                 });
             });
         }
-
     });
 </script>
 {% endblock %}

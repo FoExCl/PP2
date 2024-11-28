@@ -19,6 +19,53 @@
         background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         min-height: 100vh;
     }
+    
+    .btn-primary {
+    background-color: #A3E4DB !important; /* Color base del botón */
+    border-color: #89D9CE !important;
+    outline: none !important;
+}
+
+.btn-primary:hover {
+    background-color: #65B7A8 !important;
+    border-color: #4D9D91 !important;
+    color: #000 !important;
+}
+
+.btn-primary:focus, .btn-primary:active {
+    background-color: #65B7A8 !important;
+    border-color: #4D9D91 !important;
+    color: #000 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+    .form-control:focus {
+        border-color: #65B7A8; /* Color de borde cuando el campo está enfocado */
+        box-shadow: 0 0 5px rgba(101, 183, 168, 0.8); /* Sombra verde cuando está enfocado */
+    }
+
+    .card {
+        background-color: #ffffff; /* Fondo de tarjeta */
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #4D4D4D; /* Color de etiquetas */
+    }
+
+    a {
+        color: #65B7A8; /* Color de enlaces */
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        color: #4D9D91;
+    }
 </style>
 <main class="container">
     <section class="d-flex justify-content-center align-items-center vh-100">
@@ -50,6 +97,9 @@
                     <button type="submit" class="btn btn-primary">
                         Iniciar Sesión
                     </button>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
                 </div>
             </form>
         </div>

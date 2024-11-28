@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fdf2f8;
+        background-image: 
+            linear-gradient(45deg, #fbcfe8 25%, transparent 25%),
+            linear-gradient(-45deg, #fbcfe8 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #fbcfe8 75%),
+            linear-gradient(-45deg, transparent 75%, #fbcfe8 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        min-height: 100vh;
+    }
+
+    .title-box {
+        background-color: white;
+        color: #be185d;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 600px;
+    }
+
+    /* Estilos para los contenedores de los gráficos */
+    .d-flex {
+        display: flex;
+        justify-content: space-between; /* Gráficos al lado, con espacio entre ellos */
+        gap: 20px; /* Espacio entre los gráficos */
+        flex-wrap: wrap; /* Permite que se ajusten si el tamaño de la pantalla es pequeño */
+    }
+
+    .container-box {
+        background-color: white;
+        color: #be185d;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px;
+        flex: 1; /* Los gráficos ocuparán un espacio igual */
+        min-width: 300px;
+        max-width: 500px;
+    }
+
+    #ventas-container, #productos-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+        height: 400px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin: 0 auto;
+    }
+
+    canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+{% include 'navbar.html' %}
+
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <div class="title-box text-center">
+                <h1>Gráficos de Ventas y Productos</h1>
+            </div>
+
+            <div class="d-flex">
+                <!-- Gráfico de Ventas por Mes -->
+                <div class="container-box text-center">
+                    <h2>Ventas por Mes</h2>
+                    <div id="ventas-container">
+                        <canvas id="ventas-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Productos Más Vendidos -->
+                <div class="container-box text-center">
+                    <h2>Productos Más Vendidos</h2>
+                    <div id="productos-container">
+                        <canvas id="productos-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico de Ventas por Mes
+    const ventasCtx = document.getElementById('ventas-chart').getContext('2d');
+    new Chart(ventasCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels_barras|safe }},
+            datasets: [{
+                label: 'Cantidad de Ventas',
+                data: {{ data_barras|safe }},
+                backgroundColor: 'rgba(236, 108, 170, 0.5)',
+                borderColor: 'rgba(108, 32, 69, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Ventas por Mes' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Gráfico de Productos Más Vendidos
+    const productosCtx = document.getElementById('productos-chart').getContext('2d');
+    new Chart(productosCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ labels_torta|safe }},
+            datasets: [{
+                label: 'Cantidad Vendida',
+                data: {{ data_torta|safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Productos Más Vendidos' }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
