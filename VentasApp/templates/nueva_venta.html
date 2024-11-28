@@ -392,14 +392,11 @@ h3{
         {% csrf_token %}
         
         <div class="factura-datos">
+            <label for="numero-caja"><b>Nº Caja:</b></label>
+            <input type="text" id="numero-caja" value="{{ id_caja }}" readonly>
             <label for="numero-venta"><b>Nº Venta:</b></label>
             <input type="text" id="numero-venta" value="{{ id_venta }}" readonly>
         
-            <label for="numero-factura"><b>Nº factura:</b></label>
-            <input type="text" id="numero-factura" value="{{ id_factura }}" readonly>
-
-            <label for="numero-caja"><b>Nº Caja:</b></label>
-            <input type="text" id="numero-caja" value="{{ id_caja }}" readonly>
         </div>
 
         <div class="agregar-producto">
@@ -447,9 +444,14 @@ h3{
             <div class="linea-uno">
                 <strong><i class="fa-solid fa-hand-holding-dollar"></i> Método de pago:</strong>
                 <select id="metodo-pago" name="metodo_pago">
+                    <option value="Trasferencia">Trasferencia</option>
                     <option value="Efectivo">Efectivo</option>
                     <option value="Tarjeta">Tarjeta</option>
                 </select>
+            </div>
+            <div class="linea-uno">
+                <strong>Vuelto:</strong>
+                <input type="number" id="vuelto-input" name="vuelto" disabled/>
             </div>
             <div class="subtotal-total">
                 <span>Total:</span>
@@ -502,7 +504,7 @@ h3{
               <thead class="table-dark"> 
                 <tr>
                   <th>ID</th>
-                  <th>tipo</th>
+                  <th>Descripcion</th>
                   <th>Talle</th>
                   <th>Género</th>
                   <th>Color</th>
@@ -514,7 +516,7 @@ h3{
                 <tr data-id="{{ producto.id_productos }}" data-cantidad="{{ producto.cantidad_producto }}"
                 class="{% if producto.cantidad_producto == 0 %} bg-danger {% elif producto.cantidad_producto < 6 %} bg-warning {% endif %}">
                   <td>{{ producto.id_productos }}</td>
-                  <td>{{ producto.tipo_prod }}</td>
+                  <td>{{ producto.descripcion }}</td>
                   <td>{{ producto.talle_prod }}</td>
                   <td>{{ producto.genero_prod }}</td>
                   <td>{{ producto.color_prod }}</td>
@@ -736,6 +738,20 @@ h3{
             calcularTotal(parseFloat(document.getElementById("subtotal").textContent.replace(/[$]/g, '')) || 0);
         });
     </script>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const metodosPagoSelect = document.getElementById('metodo-pago');
+            const vueltoInput = document.getElementById('vuelto-input');
+        
+            metodosPagoSelect.addEventListener('change', function() {
+                if (this.value === 'Efectivo') {
+                    vueltoInput.disabled = false;
+                } else {
+                    vueltoInput.disabled = true;
+                    vueltoInput.value = ''; // Clear the input when not selecting Efectivo
+                }
+            });
+        });
+    </script>
 </body>
 </html>

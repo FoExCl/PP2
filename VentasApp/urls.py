@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ventas_view, nueva_venta_view, get_ventas_data, detalle_venta_view
+from .views import ventas_view, get_ventas_data, detalle_venta_view, nueva_venta_view
 
 urlpatterns = [
     path('', ventas_view, name='ventas'),

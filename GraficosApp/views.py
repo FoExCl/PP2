@@ -88,7 +88,7 @@ def combined_charts(request):
 
     for producto in productos_vendidos:
         producto_obj = Productos.objects.get(id_productos=producto['id_prod'])
-        etiquetas_torta.append(producto_obj.tipo_prod)  # Nombre del producto
+        etiquetas_torta.append(producto_obj.descripcion)  # Nombre del producto
         datos_torta.append(producto['total_vendido'])  # Cantidad vendida
 
     # Contexto combinado

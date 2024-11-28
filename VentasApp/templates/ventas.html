@@ -128,7 +128,7 @@ label{
           <div class="d-flex justify-content-between mb-3">
               <h2>Lista de Ventas</h2>
               {% if estado_caja_abierta %}
-              <a href="nueva_venta" class="btn btn-success">
+              <a href="nueva_venta/" class="btn btn-success">
                   <i class="fa-solid fa-plus"></i> Nueva Venta
               </a>
               {% endif %}
@@ -139,10 +139,11 @@ label{
                     <tr>
                         <th>ID Venta</th>
                         <th>Fecha Venta</th>
-                        <th>Total Venta</th>
                         <th>Cliente</th>
                         <th>Descuento</th>
                         <th>Método de Pago</th>
+                        <th>Vuelto</th>
+                        <th>Total Venta</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -167,34 +168,40 @@ label{
                     dataSrc: 'data'
                 },
                 columns: [
-                    { data: 'id_venta' },
-                    { data: 'fecha_venta' },
-                    {
-                        data: 'total',
-                        render: function(data) {
-                            return '$' + data.toFixed(2);
-                        }
-                    },
-                    { data: 'cliente' },
-                    {
-                        data: 'descuento',
-                        render: function(data) {
-                            return '$' + data.toFixed(2);
-                        }
-                    },
-                    { data: 'metodo_pago' },
-                    {
-                        data: 'id_venta',
-                        render: function(data) {
-                            return `
-                                <a href="/ventas/detalle_venta/${data}/" class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i> Detalles
-                                </a>
-                            `;
-                        },
-                        orderable: false
+                { data: 'id_venta' },
+                { data: 'fecha_venta' },
+                { data: 'cliente' },
+                {
+                    data: 'descuento',
+                    render: function(data) {
+                        return '$' + data.toFixed(2);
                     }
-                ],
+                },
+                { data: 'metodo_pago' },
+                {
+                    data: 'vuelto',
+                    render: function(data) {
+                        return '$' + data.toFixed(2);
+                    }
+                },
+                {
+                    data: 'total',
+                    render: function(data) {
+                        return '$' + data.toFixed(2);
+                    }
+                },
+                {
+                    data: 'id_venta',
+                    render: function(data) {
+                        return `
+                            <a href="/ventas/detalle_venta/${data}/" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> Detalles
+                            </a>
+                        `;
+                    },
+                    orderable: false
+                }
+            ],
                 language: {
                     url: '{% static "datatables/i18n/es-ES.json" %}'
                 },

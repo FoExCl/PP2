@@ -8,8 +8,6 @@ from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
 from django.db import connection
-from django.template.loader import render_to_string
-from xhtml2pdf import pisa
 
 
 
@@ -42,8 +40,15 @@ def nueva_venta_view(request):
                 metodo_pago = request.POST.get('metodo_pago')
                 total = request.POST.get('total')
                 descuento = request.POST.get('descuento')
+                vuelto = request.POST.get('vuelto', '0')  # Add vuelto field, default to 0 if not provided
 
-                nueva_factura = Facturas(id_clientes=nuevo_cliente, total=total, descuento=descuento, metodo_pago=metodo_pago)
+                nueva_factura = Facturas(
+                    id_clientes=nuevo_cliente, 
+                    total=total, 
+                    descuento=descuento, 
+                    metodo_pago=metodo_pago,
+                    vuelto=vuelto  # Add vuelto to the Facturas model
+                )
                 nueva_factura.full_clean()
                 nueva_factura.save()
 
@@ -122,7 +127,8 @@ def get_ventas_data(request):
             'detalleventas__id_factura__id_clientes__nombre_cli',
             'detalleventas__id_factura__id_clientes__apellido_cli',
             'detalleventas__id_factura__descuento',
-            'detalleventas__id_factura__metodo_pago'
+            'detalleventas__id_factura__metodo_pago',
+            'detalleventas__id_factura__vuelto'  # Add this line to include vuelto
         )
         .distinct()
     )
@@ -135,7 +141,8 @@ def get_ventas_data(request):
             'total': float(venta['detalleventas__id_factura__total']) if venta['detalleventas__id_factura__total'] else 0,
             'cliente': f"{venta['detalleventas__id_factura__id_clientes__nombre_cli']} {venta['detalleventas__id_factura__id_clientes__apellido_cli']}".strip(),
             'descuento': float(venta['detalleventas__id_factura__descuento']) if venta['detalleventas__id_factura__descuento'] else 0,
-            'metodo_pago': venta['detalleventas__id_factura__metodo_pago']
+            'metodo_pago': venta['detalleventas__id_factura__metodo_pago'],
+            'vuelto': float(venta['detalleventas__id_factura__vuelto']) if venta['detalleventas__id_factura__vuelto'] else 0  # Add this line
         })
 
     return JsonResponse({'data': data})
@@ -155,7 +162,7 @@ def detalle_venta_view(request, id_venta):
             "total_factura": row[2],
             "descuento_factura": row[3],
             "metodo_pago": row[4],
-            "vuelto": row[5], 
+            "vuelto": row[5],  #campo "vuelto"
             "id_clientes": row[6],
         }
         for row in result
@@ -179,4 +186,3 @@ def detalle_venta_view(request, id_venta):
         "productos": productos,
     }
     return render(request, 'detalle_venta.html', context)
-

@@ -62,6 +62,11 @@
 label {
     font-weight: bold;
 }
+.btn-success{
+    background-color: #4D9D91;
+      border-color: #3d857a;
+      color: #ffffff;
+    }
 .form-group {
     margin-bottom: 15px;
 }
@@ -114,6 +119,17 @@ label {
             <div class="header mb-4 d-flex flex-column align-items-center">
                 <h2 class="text-center">Ventas realizadas</h2>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Monto Inicial:</strong> ${{ monto_inicial|floatformat:2 }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Egreso:</strong> ${{ total_vuelto|floatformat:2 }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Ingreso:</strong> ${{ total_ventas|floatformat:2 }}
+                </div>
+            </div>
             <div id="sales-info" class="text-center mb-2">
                 Mostrando {{ ventas|length }} Ventas.
             </div>
@@ -127,6 +143,7 @@ label {
                             <th>Cliente</th>
                             <th>Descuento</th>
                             <th>Método de Pago</th>
+                            <th>Vuelto</th>
                             <th>Detalles</th>
                         </tr>
                     </thead>
@@ -139,6 +156,7 @@ label {
                             <td>{{ venta.cliente }}</td>
                             <td>{{ venta.descuento }}</td>
                             <td>{{ venta.metodo_pago }}</td>
+                            <td>{{ venta.vuelto }}</td>
                             <td>
                               <a href="{% url 'detalle_venta' venta.id_venta %}" class="btn btn-info btn-sm">
                                 <i class="fas fa-eye"></i> Detalles
@@ -166,13 +184,14 @@ label {
                 title: "Cierre de Caja",
                 message: "¿Estás seguro de que deseas cerrar la caja?",
                 buttons: {
-                    confirm: {
-                        label: 'Sí',
-                        className: 'btn-danger'
-                    },
+
                     cancel: {
                         label: 'No',
-                        className: 'btn-secondary'
+                        className: 'btn-danger'
+                    },
+                    confirm: {
+                        label: 'Sí',
+                        className: 'btn-success'
                     }
                 },
                 callback: function(result) {
@@ -190,12 +209,12 @@ label {
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
                 },
-                pageLength: 25,
+                pageLength: 100,
                 lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
                 order: [[0, 'desc']],
                 columnDefs: [
                     { 
-                        targets: [2, 4],
+                        targets: [2, 4, 6],
                         render: $.fn.dataTable.render.number(',', '.', 2, '$') 
                     },
                     { 
