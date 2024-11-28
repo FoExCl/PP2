@@ -21,6 +21,7 @@
         color: #be185d;
     }
     
+    
     .btn-primary {
         background-color: #be185d !important; /* Nuevo color base del botón */
         border-color: #a31450 !important; /* Ajustar un tono más oscuro para el borde */
@@ -40,6 +41,7 @@
         outline: none !important;
         box-shadow: none !important;
     }
+    
 
 
     .form-control:focus {
@@ -47,12 +49,12 @@
         box-shadow: 0 0 5px rgba(101, 183, 168, 0.8); /* Sombra verde cuando está enfocado */
     }
 
-    .container-box {
+     .container-box {
         background-color: white;
-        border: 1px solid #ccc;
+        border: 2px solid #be185d; /* Cambiar borde al color deseado */
         padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px; /* Ajustar redondeo */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
         margin-bottom: 15px;
         width: 100%;
         max-width: 800px;
@@ -60,12 +62,12 @@
 
     .title-box {
         background-color: white;
-        border: 1px solid #ccc;
+        border: 2px solid #be185d; /* Cambiar borde al color deseado */
         padding: 20px;
-        border-radius: 8px;
+        border-radius: 10px; /* Ajustar redondeo */
         text-align: center;
         margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
         width: 100%;
         max-width: 800px;
     }
@@ -187,7 +189,7 @@
                         <input type="password" name="password_nueva" class="form-control" autocomplete="new-password" required id="id_password_nueva">
                         <div class="form-text">
                             <ul id="password-requirements" class="password-requirements">
-                                <li id="req-personal">Su contraseña no puede ser muy similar a su otra información personal.</li>
+                                <li id="req-personal">Su contraseña no debe contener información personal.</li>
                                 <li id="req-length">Su contraseña debe contener al menos 8 caracteres.</li>
                                 <li id="req-common">Su contraseña no puede ser una contraseña de uso común.</li>
                                 <li id="req-numeric">Su contraseña no puede ser completamente numérica.</li>
