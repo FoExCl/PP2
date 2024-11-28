@@ -141,6 +141,7 @@
                                 <button class="btn btn-success edit-user" data-user-id="{{ empleado.id_user.id }}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
+                                {% if empleado.id_user.id != request.user.id %}
                                 <button class="btn btn-warning toggle-active" data-user-id="{{ empleado.id_user.id }}" data-is-active="{{ empleado.id_user.is_active|yesno:'true,false' }}">
                                     {% if empleado.id_user.is_active %}
                                         <i class="fa-solid fa-user-slash"></i>
@@ -148,6 +149,7 @@
                                         <i class="fa-solid fa-user-check"></i>
                                     {% endif %}
                                 </button>
+                            {% endif %}
                             </div>
                         </td>
                     </tr>
