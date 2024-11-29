@@ -24,14 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y+vy50*evcx!4$fxgs#%zq*271ehwkqsg+4*&v%3k@=_vbyx$g'
 
 # SECURITY WARNING: don't run with debug turned on in production!7
-#DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+#DEBUG = True
 
-#PORT= int(os.getenv("PORT", 8000))
-#HOST= os.getenv("HOST", "0.0.0.0")
-ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = ["*",".cleverapps.io", "app_3c083f94-d650-4192-b569-c77573a0b109"]
-#CSRF_TRUSTED_ORIGINS=["https://*.cleverapps.io","https://app_3c083f94-d650-4192-b569-c77573a0b109.cleverapps.io"]
+PORT= int(os.getenv("PORT", 8000))
+HOST= os.getenv("HOST", "0.0.0.0")
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*",".cleverapps.io", "app_3c083f94-d650-4192-b569-c77573a0b109"]
+CSRF_TRUSTED_ORIGINS=["https://*.cleverapps.io","https://app_3c083f94-d650-4192-b569-c77573a0b109.cleverapps.io"]
 
 
 # Application definition
@@ -94,18 +94,15 @@ WSGI_APPLICATION = 'Ely_BABY.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bjvhcp3oyzg8gz8rofmk',
-        'USER': 'ujnhca2f8jmcyl9u',
-        'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
-        'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
-        'PORT': '3306'
-    }
-    #"default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
-    
-
-
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'NAME': 'bjvhcp3oyzg8gz8rofmk',
+    #    'USER': 'ujnhca2f8jmcyl9u',
+    #    'PASSWORD': '49RmrZ3zD5XYeviq72Mx',
+    #    'HOST': 'bjvhcp3oyzg8gz8rofmk-mysql.services.clever-cloud.com',
+    #    'PORT': '3306'
+    #}
+    "default": dj_database_url.config(default=os.getenv("CC_Connection_URL_DB"))
 }
 
 
